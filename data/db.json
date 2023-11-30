@@ -1,0 +1,8 @@
+{
+    "game": { 
+        "gameType" : [0],
+        "legs": [0],
+        "sets": [0],
+        "players": [{"id":4546,"name": "bla"}]
+    }
+}
