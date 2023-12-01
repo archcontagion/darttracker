@@ -13,26 +13,36 @@ import { GameType } from './components/GameType';
 
 const App = () => {  
 
-  const [activeView,setActiveView] =useState('page-1');
+  const [activeView,setActiveView] =useState('page-2');
   const [gameType,setGameType] = useState(501);
   const [sets, setSets] = useState(1);
   const [legs, setLegs] = useState (3);
   const [newPlayer, setNewPlayer] = useState('');
-  // don´t know how one could set this without the redundant setter. Doesn´t work with single variable.
-  const [players, setPlayers] = useState([]);
+  const [playerScore, setPlayerScore] = useState(501);
+  
 
+
+
+  // don´t know how one could set this without the redundant setter. Doesn´t work with single variable.
+  const [players, setPlayers] = useState([{id:uuid() ,name: 'Phillip',title: 'D-Master', score: gameType, playerStatus: true},
+                                          {id:uuid() ,name: 'Mike',title: 'D-Master', score: gameType, playerStatus: false}]);
+
+  // all the hooks that will be given to the central AppContext, 
+  // so that child components have the ability to change values outside of their scope.
   const state = {
     'setGameType': setGameType,
     'setActiveView': setActiveView,
     'gameType':gameType,
     'legs':legs,
     'sets':sets,
-    'players':players
+    'players':players,
+    'setPlayerScore':setPlayerScore,
+    'playerScore':playerScore
   }
   
 
-  const handleSubmit = (e)=> {
-    e.preventDefault();
+  const handleSubmit = (event)=> {
+    event.preventDefault();
   }
 
   const addPlayer = () => {
@@ -58,17 +68,17 @@ const App = () => {
           <br/> 
             <Form.Group className="mb-3" controlId="SetForm">
             <Form.Label>Sets</Form.Label>
-            <Form.Control type="number" onChange={(e)=>{setLegs(e.target.value)}} value={legs} placeholder="How many sets?" />
+            <Form.Control type="number" onChange={(event)=>{setLegs(event.target.value)}} value={legs} placeholder="How many sets?" />
             </Form.Group>
             <Form.Group className="mb-3" controlId="LegForm">
             <Form.Label>Legs</Form.Label>
-            <Form.Control type="number" onChange={(e)=>{setSets(e.target.value)}} value={sets} placeholder="How many legs?" /> 
+            <Form.Control type="number" onChange={(event)=>{setSets(event.target.value)}} value={sets} placeholder="How many legs?" /> 
             </Form.Group>
 
             <Form.Label className="playerNameLabel">Player Name</Form.Label> 
             <Form.Group className="mb-12" controlId="PlayerForm">
             <div className="playListHeader">
-              <Form.Control type="text" onChange={(e)=>{setNewPlayer(e.target.value)}} value={newPlayer} /> 
+              <Form.Control type="text" onChange={(event)=>{setNewPlayer(event.target.value)}} value={newPlayer} /> 
               <Button variant="primary" className="playerAddBtn" onClick={()=>{addPlayer()}}>+</Button> 
             </div>
             </Form.Group>
