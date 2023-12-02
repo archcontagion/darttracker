@@ -13,19 +13,16 @@ const GameSession = () => {
 
   return (
     <div id="page-2" className="page">
-      <div>GameSession</div>
-      <div className="playerBoard">
-      {players.map(player => (
-            // if first player and playerStatus = false, change to true to make player active
-            <Player key={player.id} player={player}></Player>
-          ))}
-      {players.map(player => (
-            <PlayerScore key={player.id} player={player}></PlayerScore>
-          ))}
-      </div>  
-      <br/>  
-      <Button onClick={()=>{setActiveView('page-1')}}>Back to Homepage</Button>
-    </div>
+
+        <div className="playerBoard">
+          {players.map(player => (
+                // if first player and playerStatus = false, change to true to make player active
+                <Player key={player.id} player={player}></Player>
+              ))}
+        </div>  
+        <br/>  
+      </div>
+
   )
 }
 

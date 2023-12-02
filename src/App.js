@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -60,40 +60,42 @@ const App = () => {
       <div className="App">
       {activeView === 'page-1'? 
         <div id="page-1" className="page">
-          <div className="game-form">
-          <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="gameForm">
-            <GameType></GameType>
-          </Form.Group> 
-          <br/> 
-            <Form.Group className="mb-3" controlId="SetForm">
-            <Form.Label>Sets</Form.Label>
-            <Form.Control type="number" onChange={(event)=>{setLegs(event.target.value)}} value={legs} placeholder="How many sets?" />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="LegForm">
-            <Form.Label>Legs</Form.Label>
-            <Form.Control type="number" onChange={(event)=>{setSets(event.target.value)}} value={sets} placeholder="How many legs?" /> 
-            </Form.Group>
+          <div className="gridContainer">
+            <div className="game-form">
+            <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="gameForm">
+              <GameType></GameType>
+            </Form.Group> 
+            <br/> 
+              <Form.Group className="mb-3" controlId="SetForm">
+              <Form.Label>Sets</Form.Label>
+              <Form.Control type="number" onChange={(event)=>{setLegs(event.target.value)}} value={legs} placeholder="How many sets?" />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="LegForm">
+              <Form.Label>Legs</Form.Label>
+              <Form.Control type="number" onChange={(event)=>{setSets(event.target.value)}} value={sets} placeholder="How many legs?" /> 
+              </Form.Group>
 
-            <Form.Label className="playerNameLabel">Player Name</Form.Label> 
-            <Form.Group className="mb-12" controlId="PlayerForm">
-            <div className="playListHeader">
-              <Form.Control type="text" onChange={(event)=>{setNewPlayer(event.target.value)}} value={newPlayer} /> 
-              <Button variant="primary" className="playerAddBtn" onClick={()=>{addPlayer()}}>+</Button> 
+              <Form.Label className="playerNameLabel">Player Name</Form.Label> 
+              <Form.Group className="mb-12" controlId="PlayerForm">
+              <div className="playListHeader">
+                <Form.Control type="text" onChange={(event)=>{setNewPlayer(event.target.value)}} value={newPlayer} /> 
+                <Button variant="primary" className="playerAddBtn" onClick={()=>{addPlayer()}}>+</Button> 
+              </div>
+              </Form.Group>
+
+              <PlayerList></PlayerList>
+            
+            <br/>
+            <Button onClick={()=>{setActiveView('page-2')}} variant="primary" type="submit">
+              Start Game
+            </Button>
+            </Form>
             </div>
-            </Form.Group>
-
-            <PlayerList></PlayerList>
-          
-          <br/>
-          <Button onClick={()=>{setActiveView('page-2')}} variant="primary" type="submit">
-            Start Game
-          </Button>
-          </Form>
           </div>
       </div>
       : null }
-      {activeView === 'page-2'?       
+      {activeView === 'page-2'?
         <GameSession/>
       : null }
 
