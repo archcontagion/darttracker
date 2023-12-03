@@ -35,11 +35,14 @@ const mainButtonsRow_2 = [
                     ];
 
  // need AppContext because I want to change value un PlayerScore Component  
-  const {playerScore,
+  const {setActiveView,
+        playerScore,
         setPlayerScore,
+        activePlayer,
+        setActivePlayer,
         players} = useContext(AppContext);  
 
-  const [playerStatus, setPlayerStatus]= useState(object.player.playerStatus);
+
   const [throwCount, setThrowCount] = useState(3);
   const [currentThrowScores, setCurrentThrowScores] = useState([]);
   
@@ -51,12 +54,18 @@ const mainButtonsRow_2 = [
 
   // get inactive player
   let inactivePlayer = players.filter((player)=>{
-        if (player.playerStatus === false)
+        if (activePlayer !== player.id)
         {
             return player;
         }
   });
-
+  // finish round set inactive player active
+  const finishRound = () =>{
+    setThrowCount(3);
+    setCurrentThrowScores([]);
+    setActivePlayer(inactivePlayer[0].id);
+    setPlayerScore(inactivePlayer[0].score);    
+  }
   // with each dart thrown subtract from active player score
   const subTractScore = (value) => {
 
@@ -76,27 +85,29 @@ const mainButtonsRow_2 = [
 
 
 
+
+
   return (
-    <div className={`playerCard${playerStatus ? " active" : " inactive"}`} id={object.player.id}>
+    <div className={`playerCard${object.player.id === activePlayer ? " active" : " inactive"}`} id={activePlayer}>
         <div className="row topRow">
             <div className="playerHead">
                 <div className="playerImages">
-                    {playerStatus ? 
-                    <img src={"../../images/Philipp_1.png"} alt={`Player: ${object.player.name}`} />
+                    {object.player.id === activePlayer ? 
+                    <img className="avatarImage active" src={`../../images/${object.player.avatar}`} alt={`Player: ${activePlayer[0].name}`} />
                     : 
-                    <img src={"../../images/Philipp_1_inactive.png"} alt={`Player: ${inactivePlayer[0].name}`} />                    
+                    <img className="avatarImage" src={`../../images/${inactivePlayer[0].avatar}`} alt={`Player: ${inactivePlayer[0].name}`} />                    
                     }
-                    {playerStatus ? 
+                    {object.player.id === activePlayer ? 
                     <span className="inactivePlayerScore">{inactivePlayer[0].score}</span>
                     : 
                     null               
                     }
                 </div>
                 <div className="playerName">
-                    <h2>{object.player.name}</h2>
+                    <h2>{activePlayer[0].name}</h2>
                 </div>
                 <div className="playerTitle">
-                    <h2>{object.player.title}</h2>
+                    <h2>{activePlayer[0].title}</h2>
                 </div>
             </div>
         </div>
@@ -120,7 +131,7 @@ const mainButtonsRow_2 = [
                         : <img className="arrowIcon" src={"../../images/dart.svg"} alt="`Player: ${object.player.name}`" />}
                         </li>                
                     </ul>
-                    <div id={object.player.id} className="playerScore">{playerScore}</div> 
+                    <div id={activePlayer[0].id} className="playerScore">{playerScore}</div> 
                 </div>
             </div>
         </div>
@@ -131,7 +142,7 @@ const mainButtonsRow_2 = [
                             <tr>
                             {topButtons.map(item => (
                                 <td  className="topButtons" key={item.id}>
-                                <Button name={item.value} value={item.value} onClick={()=>{subTractScore(item.value);}}>
+                                <Button name={item.value} disabled={throwCount === 0} value={item.value} onClick={()=>{subTractScore(item.value);}}>
                                 {item.label}
                                 </Button></td>
                             ))}                        
@@ -143,7 +154,7 @@ const mainButtonsRow_2 = [
                         <tr>
                         {mainButtonsRow_1.map((item) => (
                             <td className="mainButtons" key={item.id}><
-                            Button name={item.value} value={item.value} onClick={()=>{subTractScore(item.value);}}>
+                            Button name={item.value} value={item.value} disabled={throwCount === 0} onClick={()=>{subTractScore(item.value);}}>
                             {item.label}
                             </Button></td>
                         ))}
@@ -151,7 +162,7 @@ const mainButtonsRow_2 = [
                         <tr>
                         {mainButtonsRow_2.map((item) => (
                             <td className="mainButtons" key={item.id}><
-                            Button name={item.value} value={item.value} onClick={()=>{subTractScore(item.value);}}>
+                            Button name={item.value} value={item.value} disabled={throwCount === 0} onClick={()=>{subTractScore(item.value);}}>
                             {item.label}
                             </Button></td>
                         ))}
@@ -159,7 +170,7 @@ const mainButtonsRow_2 = [
                         <tr>
                         {mainButtonsRow_1.map((item) => (
                             <td className="mainButtonsDouble" key={item.id}>
-                                <Button name={`d${item.value}`} value={item.value*2} onClick={()=>{subTractScore(item.value*2);}}>
+                                <Button name={`d${item.value}`} disabled={throwCount === 0} value={item.value*2} onClick={()=>{subTractScore(item.value*2);}}>
                                     <span>{item.label}</span>
                                     <span>..</span>
                                 </Button>
@@ -169,7 +180,7 @@ const mainButtonsRow_2 = [
                         <tr>
                         {mainButtonsRow_2.map((item) => (
                             <td className="mainButtonsDouble" key={item.id}>
-                                <Button name={`d${item.value}`} value={item.value*2} onClick={()=>{subTractScore(item.value*2);}}>
+                                <Button name={`d${item.value}`} disabled={throwCount === 0} value={item.value*2} onClick={()=>{subTractScore(item.value*2);}}>
                                     <span>{item.label}</span>
                                     <span>..</span>
                                 </Button>
@@ -179,7 +190,7 @@ const mainButtonsRow_2 = [
                         <tr>
                         {mainButtonsRow_1.map((item) => (
                             <td className="mainButtonsTriple" key={item.id}>
-                                <Button name={`t${item.value}`} value={item.value*3} onClick={()=>{subTractScore(item.value*3);}}>
+                                <Button name={`t${item.value}`} disabled={throwCount === 0} value={item.value*3} onClick={()=>{subTractScore(item.value*3);}}>
                                     <span>{item.label}</span>
                                     <span>...</span>
                                 </Button>
@@ -189,7 +200,7 @@ const mainButtonsRow_2 = [
                         <tr>
                         {mainButtonsRow_2.map((item) => (
                             <td className="mainButtonsTriple" key={item.id}>
-                                <Button name={`t${item.value}`} value={item.value*3} onClick={()=>{subTractScore(item.value*3);}}>
+                                <Button name={`t${item.value}`} disabled={throwCount === 0} value={item.value*3} onClick={()=>{subTractScore(item.value*3);}}>
                                     <span>{item.label}</span>
                                     <span>...</span>
                                 </Button>
@@ -198,8 +209,14 @@ const mainButtonsRow_2 = [
                         </tr>
                         </tbody>
                     </table>
-                    <h3 className="headingChangeView">Ansicht wechseln</h3>
-                    <Button className="endGame" id="endGame">                
+
+                    <h3 className="headingChangeView">
+                        <a href="#" onClick={(event)=>{event.preventDefault();setActiveView('page-1');}}>Ansicht wechseln</a> 
+                    </h3>
+
+                   
+
+                    <Button onClick={()=>{finishRound()}} className="endGame" id="endGame">                
                         <span>Runde beenden</span>
                     </Button>
             </div>

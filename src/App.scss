@@ -21,7 +21,13 @@ ul {
   padding: 0;
   margin:0;
   display: flex;
+
+  &.playerList {
+    display: list-item;
+  }
 }
+
+
 
 .playerBoard {
   position: absolute;
@@ -77,16 +83,31 @@ ul {
 }
 .game-type input:checked+label {
   color: white;
-  background-color: rgb(84, 84, 201);
+  background-color: var(--neutral-colors-black-80, #363636);
 }
 
 .game-form {
   width: 50%;
   border: 1px solid silver;
-  border-radius: .5rem;
   margin: auto;
-  background-color: rgb(220, 223, 233);
+  background-color: var(--neutral-colors-black-75, #434343);
   padding: 1rem;  
+
+  label,
+  p {
+    margin:0;
+    font-size: 1.2rem;
+  }
+
+  button {
+    padding: .2rem;
+  }
+  
+  .gameTypeContainer {
+    padding: 1rem;
+    background-color: var(--neutral-colors-white, #FFF);
+  }
+
 }
 
 .playerCard {
@@ -105,9 +126,22 @@ ul {
   .playerHead {
     text-align:left;
 
+    .avatarImage {
+      border-radius: 50%;
+      width:4.6875rem;
+      height:auto;
+    }
+
+    .avatarImage.active {
+      border:6px solid var(--Play, #F70);
+      width:7.8125rem;
+      height:auto;
+    }
+
     .inactivePlayerScore {
       position: relative;
       top: -1.25rem;
+      left: .25rem;
       color: var(--neutral-colors-white, #FFF);
       font-family: Alumni Sans;
       font-size: 1.5625rem;
@@ -171,23 +205,19 @@ ul {
       line-height: 80%;
       text-transform: uppercase; 
       margin-bottom: 3.8125rem;
+
+      a {
+        text-decoration: none;
+        color: var(--neutral-colors-white, #FFF);
+      }
+
     }
   }
 
-  & img {
-    width:4.7rem;
-    height:4.7rem;
-  }
 
-  &.active img {
-    width: 7.8rem;
-    height:7.8rem;
-    margin-left:.5rem;
-  }
-  
   &.inactive  {
     img {
-        margin:5.0625rem 0 0 10.375rem;
+        margin:3.5rem 0 0 11rem;
         text-align: left;
     }
     .playerScore,
@@ -205,7 +235,7 @@ ul {
   }
   
   &.active {
-    padding: 3.75rem;
+    padding: 1.5rem 3.75rem 3.75rem 3.75rem;
     width: calc(100% - 120px); // padding 3.75rem * 2
 
     z-index:1;
@@ -334,29 +364,37 @@ ul {
   justify-content: space-evenly;
 }
 
-.game-type  {
-  padding: .5rem;
-  border-radius: .2rem;
-  background-color: var(--neutral-colors-white, #FFF);
-}
-
 .game-type input {
   display:none;
 }
 
-.game-type label {
-  margin: 0 1rem;
-  padding: .5rem;
-  border: 1px solid silver;
-}
-.game-type input:checked+label {
-  color: var(--neutral-colors-white, #FFF);
-}
 
 .game-form {
-  width: 50%;
-  border-radius: .5rem;
-  margin: auto;  
+  width: 100%;
+  margin: auto; 
+  
+  .playerList {
+    
+    p {
+      color: var(--neutral-colors-white, #FFF);
+    }
+  }
+
+  label {
+    color: var(--neutral-colors-white, #FFF);
+    margin: 0 .5rem;
+  }
+
+  .game-type label {
+    margin: 0 1rem;
+    padding: .5rem;
+    border: 1px solid silver;
+    color: var(--neutral-colors-black, #000);
+  }
+  .game-type input:checked+label {
+    color: var(--neutral-colors-white, #FFF);
+  }
+
 }
 
 .controlPanel {
@@ -370,5 +408,6 @@ ul {
 .controlPanel ul li {
   list-style-type: none;
 }
+
 
 
