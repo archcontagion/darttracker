@@ -33,16 +33,10 @@ export const GameType = () => {
     <input type="radio"
      name="gameType"
      id="game-4"
-     checked={gameType === 701 ? 'checked' : null}
-     onChange={(e) => {setGameType(e.target.value); setPlayerScore(e.target.value);}} value="701" />
-    <label htmlFor="game-4">701</label>
+     checked={gameType === 'ATC' ? 'checked' : null}
+     onChange={(e) => {setGameType(e.target.value); setPlayerScore(e.target.value);}} value="ATC" />
+    <label htmlFor="game-4">ATC</label>
 
-    <input type="radio"
-     name="gameType"
-     id="game-5"
-     checked={gameType === 1001 ? 'checked' : null}
-     onChange={(e) => {setGameType(e.target.value); setPlayerScore(e.target.value);}} value="1001" />
-    <label htmlFor="game-5">1001</label>
     <br/><br/>
     <p>Set Gametype: {gameType}</p>
 </div>

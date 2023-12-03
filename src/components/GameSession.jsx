@@ -1,13 +1,10 @@
 import React, { useContext }  from 'react'
-import Button from 'react-bootstrap/esm/Button'
 import Player from './Player';
-import PlayerScore from './PlayerScore';
 import { AppContext } from '../AppContext';
 
 // the active game session
 const GameSession = () => {
-  const {setActiveView, 
-         players} = useContext(AppContext);
+  const {players} = useContext(AppContext);
  
 
 
