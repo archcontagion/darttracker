@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { AppContext } from '../AppContext';
 import Button from 'react-bootstrap/Button';
+import { Image } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import PlayerList from './PlayerList';
 import { GameType } from './GameType';
@@ -35,6 +36,12 @@ const GameForm = () => {
     <PlayerRooster></PlayerRooster>
 
     <Form onSubmit={handleSubmit}>
+    <Button className="playButton" type="submit">
+      <h2>Spiel starten</h2>
+      <Image className="playButton" src={`../../images/playButton.png`} alt={`Spiel starten`} />
+    </Button>
+    <div className="infoStart" style={{display:'none', color:'white'}}>Please enter at least two players, in order to start the game.</div>
+    <br/><br/>
     <Form.Group className="gameTypeContainer" controlId="gameForm">
       <GameType></GameType>
     </Form.Group> 
@@ -48,12 +55,7 @@ const GameForm = () => {
       <Form.Control type="number" onChange={(event)=>{setSets(event.target.value)}} value={sets} placeholder="How many legs?" /> 
       </Form.Group>
       <br/>
-    
-    <br/>
-    <Button type="submit">
-      Start Game
-    </Button>
-    <div className="infoStart" style={{display:'none', color:'white'}}>Please enter at least two players, in order to start the game.</div>
+
     </Form>
     </div>
   )

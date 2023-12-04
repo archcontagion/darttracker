@@ -442,6 +442,28 @@ ul {
 
 }
 
+.playButton {
+  position:relative;
+  border:none;
+  background:none;
+
+  h2 {
+    z-index:1;
+    margin: auto;
+    position: absolute;
+    top: 32%;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    font-size: 3.75rem;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 3rem;
+    letter-spacing: 0em;
+
+  }
+}
+
 .playerRooster {
   margin: 0 auto;
   margin-top:5.75rem;
