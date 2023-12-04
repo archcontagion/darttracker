@@ -380,8 +380,22 @@ ul {
 
   .versusHeader,
   .versusPlayer {
+    position: relative;
     display:inline-block;
     margin:0;
+  }
+
+  .versusPlayer {
+    height:17rem;
+    
+    button.removeIcon {
+      position: absolute;
+      left: 43%;
+      top: -7%;
+      height:auto;
+      min-height:auto;
+      width: 2rem;
+    }
   }
 
   .versusHeader {
@@ -421,6 +435,7 @@ ul {
 
   .versusPlayerName h2,
   .versusPlayerTitle h2 {
+    color: var(--neutral-colors-white, #FFF);
     font-family: Alumni Sans; 
     margin:0;
   }
@@ -490,7 +505,7 @@ ul {
   margin: auto; 
   
   .playerList {
-    
+    margin-top:2rem;
     p {
       color: var(--neutral-colors-white, #FFF);
     }

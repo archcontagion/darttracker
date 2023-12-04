@@ -3,7 +3,7 @@ import { AppContext } from '../AppContext';
 import Button from 'react-bootstrap/Button';
 import { Image } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import PlayerList from './PlayerList';
+import PlayerVersusList from './PlayerVersusList';
 import { GameType } from './GameType';
 import PlayerRooster from './PlayerRooster';
 
@@ -31,7 +31,7 @@ const GameForm = () => {
   return (
     <div className="game-form">
 
-    <PlayerList></PlayerList>
+    <PlayerVersusList></PlayerVersusList>
     
     <PlayerRooster></PlayerRooster>
 

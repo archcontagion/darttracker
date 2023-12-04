@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import { Image } from 'react-bootstrap';
 import { AppContext } from '../AppContext';
 
-const PlayerList = () => {
+const PlayerVersusList = () => {
 
     const {
           players,
@@ -42,28 +42,34 @@ const PlayerList = () => {
         <div className="playerList">
           <div className="versusArea">
             <div className="versusPlayer first" key={player1.id}>
-            <Button onClick={()=>{removePlayer(player1.id);}}>
+              {player1.id !== 'noPlayer_01' ? 
+                <Button className="removeIcon" onClick={()=>{removePlayer(player1.id);}}>
+                  <Image  src={`../../images/removePlayerIcon.svg`} alt={`Spieler entfernen`} />  
+                </Button>
+              : null}
               <Image className="versusImage" src={`../../images/${player1.avatar}`} alt={`Spieler: ${player1.name}`} />
               <div className="versusPlayerName">
-                    <h2>{player1.name}</h2>
-                </div>
-                <div className="versusPlayerTitle">
-                    <h2>{player1.title}</h2>
-                </div>
-            </Button>
+                  <h2>{player1.name}</h2>
+              </div>
+              <div className="versusPlayerTitle">
+                  <h2>{player1.title}</h2>
+              </div>
             </div>
             <h2 className="versusHeader">VS</h2>
             <div className="versusPlayer second" key={player2.id}>
-            <Button onClick={()=>{removePlayer(player2.id);}}>
+               {player2.id !== 'noPlayer_02' ? 
+                <Button className="removeIcon"  onClick={()=>{removePlayer(player2.id);}}>
+                  <Image src={`../../images/removePlayerIcon.svg`} alt={`Spieler entfernen`} />  
+                </Button>
+              : null}
               <Image className="versusImage" src={`../../images/${player2.avatar}`} alt={`Spieler: ${player2.name}`} />
               <div className="versusPlayerName">
-                    <h2>{player2.name}</h2>
-                </div>
-                <div className="versusPlayerTitle">
-                    <h2>{player2.title}</h2>
-                </div>
-            </Button>
-            </div>
+                  <h2>{player2.name}</h2>
+              </div>
+              <div className="versusPlayerTitle">
+                  <h2>{player2.title}</h2>
+              </div>
+          </div>
           </div>
           
         </div>
@@ -73,4 +79,4 @@ const PlayerList = () => {
       );
 }
 
-export default PlayerList
+export default PlayerVersusList
