@@ -7,6 +7,7 @@ import { Image } from 'react-bootstrap';
 const PlayerRooster = () => {
     const {
         setActivePlayer,
+        setInactivePlayer,
         players,
         setPlayers,
         playerRooster,
@@ -24,11 +25,12 @@ const PlayerRooster = () => {
             // if first player in players array set to activePlayer
             if (players.length === 1)
             {
-                setActivePlayer(players[0].id);
+                setActivePlayer(players[0]);
                 setPlayer1(players[0]);
             }  
             if (players.length === 2)
             {
+                setInactivePlayer(players[1]);
                 setPlayer2(players[1])
             } 
         }    
@@ -41,28 +43,28 @@ const PlayerRooster = () => {
     );
     const playerRoosterRows = chunk(playerRooster, 5);
 
-  return (
-    <table className="playerRooster">
-        <tbody>
-        {playerRoosterRows.map((array, index)=>{
-            return (
-            <tr key={index}>                  
-            {array.map((player, index) => {
-            return (
-            <td key={index}>
-                <Button onClick={()=>{addPlayer(player)}}>
-                    <Image className="roosterImage" src={`../../images/${player.avatar}`} alt={`Spieler: ${player.name}`} />
-                </Button>
-            </td>
-            )
+    return (
+        <table className="playerRooster">
+            <tbody>
+            {playerRoosterRows.map((array, index)=>{
+                return (
+                <tr key={index}>                  
+                {array.map((player, index) => {
+                return (
+                <td key={index}>
+                    <Button onClick={()=>{addPlayer(player)}}>
+                        <Image className="roosterImage" src={`../../images/${player.avatar}`} alt={`Spieler: ${player.name}`} />
+                    </Button>
+                </td>
+                )
+                })}
+                </tr>
+                )
             })}
-            </tr>
-            )
-        })}
-            
-        </tbody>
-    </table>
-  )
+                
+            </tbody>
+        </table>
+    )
 }
 
 export default PlayerRooster

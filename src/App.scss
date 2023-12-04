@@ -4,7 +4,7 @@
   text-align: center;
    /* Vector */
    background: radial-gradient(50% 50% at 50% 50%, rgba(17, 17, 17, 0) 0%, var(--dark-grey,#222222) 100%);
-   background-image:url(../public/bg-vector.svg);
+   background-image:url(../public/images/bg-vector.svg);
    background-size: 100%;
    background-color:var(--dark-grey,#222222);
    background-blend-mode: color-burn;
@@ -67,23 +67,93 @@ ul {
 }
 
 .game-type  {
-  padding: .5rem;
-  border-radius: .2rem;
-  background-color: white;
-}
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 1fr 1fr;
 
-.game-type input {
-  display:none;
-}
+  .btn-101,
+  .btn-301,
+  .btn-501,
+  .btn-atc {
+    background-repeat: no-repeat;
+    background-size: cover;
 
-.game-type label {
-  margin: 0 1rem;
-  padding: .5rem;
-  border: 1px solid silver;
-}
-.game-type input:checked+label {
-  color: white;
-  background-color: var(--neutral-colors-black-80, #363636);
+    h2.top {
+      font-family: Alumni Sans;
+      color: var(--neutral-colors-black-65, #5E5E5E);
+      font-size: 1rem;
+      text-transform: uppercase;
+      font-style: italic;
+      display: flex;
+      align-items: stretch;
+      flex-direction: row;
+      justify-content: center;
+      margin-bottom:2.5rem;
+
+
+      .firstDiv,
+      .secondDiv,
+      .thirdDiv {
+        display: inline-block;
+        padding:.2rem;
+      }
+
+      .firstDiv {        
+        font-size: 1.5625rem;
+        font-weight: 400;
+        line-height: 80%;
+      }
+
+      .secondDiv {
+        padding-top:.3rem;
+        text-align:left;
+        font-size: 0.6875rem;
+        font-weight: 500;
+        line-height: 78%;
+      }
+
+      .thirdDiv {
+        font-size: 1.5625rem;
+        font-weight: 700;
+        line-height: 80%; /* 20px */
+      }
+    }
+
+    h2 {
+      color: var(--Play, #F70);
+      font-size: 7.5rem;
+      font-style: italic;
+      font-weight: 700;
+      line-height: 80%; 
+      text-transform: uppercase;
+      display: flex;
+      justify-content: center;
+      margin-top: 3.125rem;
+    }
+
+    h3 {
+      color: var(--neutral-colors-black-65, #5E5E5E);
+      font-size: 1.5625rem;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 80%; 
+      text-transform: uppercase;
+      margin-bottom: 3.125rem;
+    }
+  }
+
+  .btn-101 {
+    background-image:url(../public/images/101-bg.svg);
+  }
+  .btn-301 {
+    background-image:url(../public/images/301-bg.svg);
+  }
+  .btn-501 {
+    background-image:url(../public/images/501-bg.svg);
+  }
+  .btn-atc {
+    background-image:url(../public/images/atc-bg.svg);
+  }
 }
 
 .game-form {
@@ -138,8 +208,8 @@ ul {
 
     .inactivePlayerScore {
       position: relative;
-      top: -1.25rem;
-      left: .25rem;
+      top: -.75rem;
+      left: .1rem;
       color: var(--neutral-colors-white, #FFF);
       font-family: Alumni Sans;
       font-size: 1.5625rem;
@@ -167,7 +237,7 @@ ul {
       height:4.75rem;
       padding-left: 24%;
       background-repeat: no-repeat;
-      background-image:url(../public/endGame.svg);
+      background-image:url(../public/images/endGame.svg);
       background-position: 0;
       color: var(--neutral-colors-white, #FFF);
       font-family: Alumni Sans;
@@ -219,9 +289,12 @@ ul {
       text-transform: uppercase; 
       margin-bottom: 3.8125rem;
 
-      a {
+      button {
         text-decoration: none;
         color: var(--neutral-colors-white, #FFF);
+        background:none;
+        border:none;
+        text-align: left;
       }
 
     }
@@ -230,7 +303,7 @@ ul {
 
   &.inactive  {
     img {
-        margin:3.5rem 0 0 11rem;
+        margin:3.5rem 0 0 10rem;
         text-align: left;
     }
     .playerScore,
@@ -481,7 +554,7 @@ ul {
 
 .playerRooster {
   margin: 0 auto;
-  margin-top:5.75rem;
+  margin-top:0.75rem;
 
   button {
     background:none;
@@ -527,17 +600,35 @@ ul {
   }
 
 }
+.startPageButtons {
+  margin: 0 auto;
 
-.controlPanel {
-  bottom: 0;
-  left: 2rem;
-  right: 2rem;
-}
-.controlPanel ul {
-  display:flex;
-}
-.controlPanel ul li {
-  list-style-type: none;
+  ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .startPagePlayButton {  
+    width: 100%;      
+    border:0;
+
+    button {
+      width: 100%;
+      position: relative;
+      border: none;
+      background-color:var(--neutral-colors-black-75, #434343);    
+    }
+
+    h2 {
+      color: var(--neutral-colors-white, #FFF);
+      font-size: 5.625rem;
+      line-height: 5.625rem;
+      text-transform: uppercase;
+      
+    }
+  }
 }
 
 

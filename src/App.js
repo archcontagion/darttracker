@@ -4,18 +4,23 @@ import {v1 as uuid} from "uuid";
 import { AppContext } from './AppContext';
 import GameSession from './components/GameSession';
 import GameForm from './components/GameForm';
+import StartPage from './components/StartPage';
+import GameTypePage from './components/GameTypePage';
+
 
 
 
 
 const App = () => {  
-
   
-  const [activeView,setActiveView] =useState('page-1');
+  const [openModal,setOpenModal] = useState(false);
+  const [modalMessage,setModalMessage] = useState('');
+  const [activeView,setActiveView] = useState('page-1');
   const [gameType,setGameType] = useState(501);
   const [sets, setSets] = useState(1);
   const [legs, setLegs] = useState (3);
   const [playerScore, setPlayerScore] = useState(501);
+
   
 
   // Mock data
@@ -38,15 +43,14 @@ const App = () => {
   // {id:uuid() ,name: 'Mike',title: 'Sharpshooter', score: gameType, avatar: "Player_2.png"}]);
   // const [activePlayer,setActivePlayer] = useState(players[0].id);
 
-      // set players in vs screen to default values
+  // set players in vs screen to default values
   const [player1, setPlayer1] = useState({'id':'noPlayer_01','name':'','avatar':'noAvatar.png'});
   const [player2, setPlayer2] = useState({'id':'noPlayer_02','name':'','avatar':'noAvatar.png'});
   const [players, setPlayers] = useState([]);
   const [activePlayer,setActivePlayer] = useState();
-  const [newPlayerName, setNewPlayerName] = useState('');
-  const [newPlayerTitle, setNewPlayerTitle] = useState('');
-  const [newPlayerImage, setNewPlayerImage] = useState('');
-
+  const [inactivePlayer,setInactivePlayer] = useState(); 
+  const [throwCount, setThrowCount] = useState(3);
+  const [currentThrowScores, setCurrentThrowScores] = useState([]);
 
 
 
@@ -54,30 +58,34 @@ const App = () => {
   // all the hooks that will be given to the central AppContext, 
   // so that child components have the ability to change values outside of their scope.
   const state = {
-    'player1':player1,
-    'player2':player2,
-    'setPlayer1':setPlayer1,
-    'setPlayer2':setPlayer2,
+    'openModal': openModal,
+    'setOpenModal': setOpenModal,
+    'modalMessage': modalMessage,
+    'setModalMessage': setModalMessage,
+    'player1': player1,
+    'player2': player2,
+    'setPlayer1': setPlayer1,
+    'setPlayer2': setPlayer2,
     'setGameType': setGameType,
-    'setLegs' : setLegs,
-    'setSets' : setSets,
-    'newPlayerName':newPlayerName,
-    'setNewPlayerName':setNewPlayerName,
-    'newPlayerTitle':newPlayerTitle,
-    'setNewPlayerTitle': setNewPlayerTitle,
-    'newPlayerImage': newPlayerImage,
-    'setNewPlayerImage':setNewPlayerImage,
+    'setLegs': setLegs,
+    'setSets': setSets,
     'setActiveView': setActiveView,
-    'gameType':gameType,
-    'legs':legs,
-    'sets':sets,
-    'players':players,
+    'gameType': gameType,
+    'legs': legs,
+    'sets': sets,
+    'players': players,
     'setPlayers': setPlayers,
-    'setPlayerScore':setPlayerScore,
-    'playerScore':playerScore,
-    'activePlayer':activePlayer,
-    'setActivePlayer':setActivePlayer,
-    'playerRooster':playerRooster
+    'setPlayerScore': setPlayerScore,
+    'playerScore': playerScore,
+    'activePlayer': activePlayer,
+    'setActivePlayer': setActivePlayer,
+    'inactivePlayer': inactivePlayer,
+    'setInactivePlayer': setInactivePlayer,
+    'playerRooster': playerRooster,
+    'throwCount': throwCount,
+    'setThrowCount': setThrowCount,
+    'currentThrowScores': currentThrowScores,
+    'setCurrentThrowScores': setCurrentThrowScores
   }
   
     return (
@@ -88,15 +96,28 @@ const App = () => {
       {activeView === 'page-1'? 
         <div id="page-1" className="page">
           <div className="gridContainer">
+            <StartPage/>
+          </div>
+      </div>
+      : null }
+      {activeView === 'page-2'? 
+        <div id="page-1" className="page">
+          <div className="gridContainer">
+            <GameTypePage/>
+          </div>
+      </div>
+      : null }
+      {activeView === 'page-3'? 
+        <div id="page-1" className="page">
+          <div className="gridContainer">
             <GameForm/>
           </div>
       </div>
       : null }
-      {activeView === 'page-2'?
+      {activeView === 'page-4'?
         <GameSession/>
       : null }
-
-
+    
     </div>
     </AppContext.Provider>
     )

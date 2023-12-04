@@ -1,44 +1,97 @@
 import React, { useContext } from 'react'
+import Button from 'react-bootstrap/Button';
 import { AppContext } from '../AppContext';
 
 
 
 export const GameType = () => {
-  const {gameType,setGameType,setPlayerScore} = useContext(AppContext)
+  const {setActiveView,
+         setGameType,
+         setPlayerScore} = useContext(AppContext)
   
   return (
     <div className="game-type">
-    <input type="radio"
-     name="gameType"
-     id="game-1"
-     checked={gameType === 101 ? 'checked' : null}
-     onChange={(e) => {setGameType(e.target.value); setPlayerScore(e.target.value);}}
-     value="101" />
-    <label htmlFor="game-1">101</label>
 
-    <input type="radio"
-     name="gameType"
-     id="game-2"
-     checked={gameType === 301 ? 'checked' : null}
-     onChange={(e) => {setGameType(e.target.value); setPlayerScore(e.target.value);}} value="301" />
-    <label htmlFor="game-2">301</label>
-
-    <input type="radio"
-     name="gameType"
-     id="game-3"
-     checked={gameType === 501 ? 'checked' : null}
-     onChange={(e) => {setGameType(e.target.value); setPlayerScore(e.target.value);}} value="501" />
-    <label htmlFor="game-3">501</label>
-
-    <input type="radio"
-     name="gameType"
-     id="game-4"
-     checked={gameType === 'ATC' ? 'checked' : null}
-     onChange={(e) => {setGameType(e.target.value); setPlayerScore(e.target.value);}} value="ATC" />
-    <label htmlFor="game-4">ATC</label>
-
-    <br/><br/>
-    <p>Set Gametype: {gameType}</p>
+    <Button className="btn-101" value="101" onClick={(event) => {
+      setGameType(event.currentTarget.value);
+      setPlayerScore(event.currentTarget.value);
+      setActiveView('page-3');
+      }}>
+      <h2 className="top">
+        <div className="firstDiv">
+          est.
+        </div>
+        <div className="secondDiv">
+          player<br/>
+          leg
+        </div>
+        <div className="thirdDiv">
+          2 min
+        </div>
+      </h2>  
+      <h2>101</h2>
+      <h3>Short and sweet</h3>
+    </Button>  
+    <Button className="btn-301" value="301" onClick={(event) => {
+      setGameType(event.currentTarget.value);
+      setPlayerScore(event.currentTarget.value);
+      setActiveView('page-3');
+      }}>
+      <h2 className="top">
+        <div className="firstDiv">
+          est.
+        </div>
+        <div className="secondDiv">
+          player<br/>
+          leg
+        </div>
+        <div className="thirdDiv">
+          5 min
+        </div>
+      </h2>  
+      <h2>301</h2>
+      <h3>A real challange</h3>
+    </Button>  
+    <Button className="btn-501" value="501" onClick={(event) => {
+      setGameType(event.currentTarget.value);
+      setPlayerScore(event.currentTarget.value);
+      setActiveView('page-3');
+      }}>
+      <h2 className="top">
+        <div className="firstDiv">
+          est.
+        </div>
+        <div className="secondDiv">
+          player<br/>
+          leg
+        </div>
+        <div className="thirdDiv">
+          8 min
+        </div>
+      </h2>   
+      <h2>501</h2>
+      <h3>like a pro</h3>
+    </Button>  
+    <Button className="btn-atc" value="ATC" onClick={(event) => {
+      setGameType(event.targcurrentTargetet.value);
+      setPlayerScore(event.currentTarget.value);
+      setActiveView('page-3');
+      }}>
+      <h2 className="top">
+        <div className="firstDiv">
+          est.
+        </div>
+        <div className="secondDiv">
+          player<br/>
+          leg
+        </div>
+        <div className="thirdDiv">
+          5 min
+        </div>
+      </h2>  
+      <h2>ATC</h2>
+      <h3>Around the Clock</h3>
+    </Button>  
 </div>
   )
 }
