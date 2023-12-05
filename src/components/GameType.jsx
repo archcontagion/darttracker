@@ -73,9 +73,10 @@ export const GameType = () => {
       <h3>like a pro</h3>
     </Button>  
     <Button className="btn-atc" value="ATC" onClick={(event) => {
-      setGameType(event.targcurrentTargetet.value);
-      setPlayerScore(event.currentTarget.value);
-      setActiveView('page-3');
+      alert("WIP: Not yet implemented.");
+      // setGameType(event.targcurrentTargetet.value);
+      // setPlayerScore(event.currentTarget.value);
+      // setActiveView('page-3');
       }}>
       <h2 className="top">
         <div className="firstDiv">
