@@ -16,6 +16,7 @@ button {
     padding: 0.875rem 0.75rem 1rem 0.75rem;
     width:100%;
     height: 100%;
+    margin: -1px;
 
     span:last-child {
         line-height: 0.0625rem;
@@ -23,6 +24,15 @@ button {
     
 }
 .topButtons {
+    margin-left: -1px;
+
+    button {
+        font-size: 2.8125rem;
+        line-height: 36px;
+        letter-spacing: 0em;
+    }
+
+
     &:first-child button {
         border: 1px solid var(--neutral-colors-black-75, #434343);
         background: var(--neutral-colors-black, #000);

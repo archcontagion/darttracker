@@ -6,8 +6,8 @@ const InsertScorePanel = () => {
 
     // 1 Miss Button,1 Bullseye Button, 1 double Bullseye   
     const topButtons = [{id:'top_1', value: 0, label: 'Miss'},
-                        {id:'top_2', value: 50,label:'Bull'},
-                        {id:'top_3', value: 100, label:'Bull ..'}   
+                        {id:'top_2', value: 25,label:'Bull'},
+                        {id:'top_3', value: 50, label:'Bull ..'}   
                         ];
     const mainButtonsRow_1 = [{id:'m_4', value:1, label:1},
                               {id:'m_5', value:2, label:2},
