@@ -10,7 +10,8 @@ const Player = (object) => {
         activePlayer,
         inactivePlayer,
         throwCount,
-        currentThrowScores
+        currentThrowScores,
+        gameType
         } = useContext(AppContext);  
 
 
@@ -62,7 +63,10 @@ const Player = (object) => {
                         : <img className="arrowIcon" src={"../../images/dart.svg"} alt={`Player: ${activePlayer.name}`} />}
                         </li>                
                     </ul>
-                    <div id={activePlayer.id} className="playerScore">{playerScore}</div> 
+                    <div id={activePlayer.id} className="playerScore">
+                        <em className="gameTypeRoofLine">{gameType}</em>
+                        <h3>{playerScore}</h3>
+                    </div> 
                 </div>
             </div>
         </div>

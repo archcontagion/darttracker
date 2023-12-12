@@ -308,11 +308,13 @@ ul {
         margin:3.5rem 0 0 10rem;
         text-align: left;
     }
+
     .playerScore,
     .playerStats,
     .playerControls {
       display: none;
     }
+
   }
   
   
@@ -377,13 +379,24 @@ ul {
   .playerScore {
     margin: 0;
     text-align: center;
-    color: var(--Play, #F70);
-    font-size: 7.5rem;
     font-style: normal;
     font-weight: 700;
-    top: 38%;
-  }
 
+    h3 {
+      line-height: 6.875rem;
+      color: var(--Play, #F70);
+      font-size: 7.5rem;
+      top: 38%;
+    }
+    
+    .gameTypeRoofLine {
+      display: block;
+      font-size:1.5625rem;
+      color: var(--neutral-colors-black-70, #5E5E5E);
+    }
+
+  }
+  
 }
 
 .playerCard.active .playerName,
