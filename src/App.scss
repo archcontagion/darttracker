@@ -2,18 +2,11 @@
 
 .App {
   text-align: center;
-   /* Vector */
-   background: radial-gradient(50% 50% at 50% 50%, rgba(17, 17, 17, 0) 0%, var(--dark-grey,#222222) 100%);
-   background-image:url(../public/images/bg-vector.svg);
-   background-size: 100%;
-   background-color:var(--dark-grey,#222222);
-   background-blend-mode: color-burn;
-   mix-blend-mode: normal;
-   position: absolute;
-   top:0;
-   right:0;
-   bottom:0;
-   left:0;
+  position: absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
 }
 
 ul {

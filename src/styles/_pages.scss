@@ -1,0 +1,83 @@
+.page {
+   /* Vector */
+   background: radial-gradient(50% 50% at 50% 50%, rgba(17, 17, 17, 0) 0%, var(--dark-grey,#222222) 100%);
+   background-image:url(../../public/images/bg-vector.svg);
+   background-size: 100%;
+   background-color:var(--dark-grey,#222222);
+   background-blend-mode: color-burn;
+   mix-blend-mode: normal;
+}
+
+#page-0 {
+    background-image: url(../../public/images/gameon.svg);
+    background-repeat: no-repeat;
+
+
+    h2 {
+        width: 26rem;
+        font-family: Alumni Sans;
+        color:var(--neutral-colors-white, #FFF);
+        text-transform: uppercase;
+        font-size: 90px;
+        font-style: italic;
+        font-weight: 700;
+        line-height: 72px;
+        letter-spacing: 0em;
+        text-align: center;
+    }
+
+    .loginForm {
+        text-align: center;
+        margin: auto;
+        position: relative;
+        padding: 20%;
+
+        label,
+        input {
+            color: var(--neutral-colors-black-70);
+        }
+
+        label {
+            position: absolute;
+            margin: .5rem 0 0 2rem;
+        }
+
+        input {
+            width: 26rem;
+            min-height: 5.8125rem;
+            padding: 1.25rem 1.5625rem 1.25rem 1.5625rem;
+        }
+
+        .btn {
+            width: 100%;
+            position: absolute;
+            padding:4rem;
+            bottom: 0;
+            left: 0;
+            background-color: var(--red);
+            color:var(--neutral-colors-white);
+            font-size: 90px;
+            font-style: italic;
+            font-weight: 700;
+            line-height: 0;
+        }
+
+        input {
+            border: 1px;
+            gap: 0.3125rem;
+            background-color:var(--neutral-colors-black-76);
+            border: 1px solid var(--neutral-colors-black-70);
+            font-size: 2.8125rem;
+            font-style: italic;
+            text-align: left;
+        }
+
+        .userpassword label {
+            display: none;
+        }
+
+        .formgroup {
+            margin: 1.25rem 0;
+        }
+    }
+}

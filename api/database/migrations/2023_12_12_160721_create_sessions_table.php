@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sessions', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('SessionID');
+            $table->string('GameName');
+            $table->dateTime('StartTime');
+            $table->dateTime('EndTime')->nullable();
             $table->timestamps();
-            $table->string('name');
-            $table->time('start_time')->useCurrent();
-            $table->time('end_time');
         });
     }
 

@@ -6,6 +6,7 @@ import GameSession from './components/GameSession';
 import GameForm from './components/GameForm';
 import StartPage from './components/StartPage';
 import GameTypePage from './components/GameTypePage';
+import LoginRegisterPage from './components/LoginRegisterPage';
 
 
 
@@ -15,7 +16,7 @@ const App = () => {
   
   const [openModal,setOpenModal] = useState(false);
   const [modalMessage,setModalMessage] = useState('');
-  const [activeView,setActiveView] = useState('page-1');
+  const [activeView,setActiveView] = useState('page-0');
   const [gameType,setGameType] = useState(501);
   const [sets, setSets] = useState(1);
   const [legs, setLegs] = useState (3);
@@ -93,6 +94,13 @@ const App = () => {
       // all the information that needs to be set to be able to start a game session.
       <AppContext.Provider value={state}>
       <div className="App">
+      {activeView === 'page-0'? 
+        <div id="page-0" className="page">
+          <div className="gridContainer">
+            <LoginRegisterPage/>
+          </div>
+      </div>
+      : null }        
       {activeView === 'page-1'? 
         <div id="page-1" className="page">
           <div className="gridContainer">
