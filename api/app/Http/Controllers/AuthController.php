@@ -18,7 +18,7 @@ class AuthController extends Controller {
 
         $user = User::create([
             'name' => $data['name'],
-            'email' => $data['email'],
+            //'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
 
@@ -35,11 +35,12 @@ class AuthController extends Controller {
     public function login(LoginRequest $request) {
         $data = $request->validated();
 
-        $user = User::where('email', $data['email'])->first();
+        //$user = User::where('email', $data['email'])->first();
+        $user = User::where('name', $data['name'])->first();
 
         if (!$user || !Hash::check($data['password'], $user->password)) {
             return response()->json([
-                'message' => 'Email or password is incorrect!'
+                'message' => 'User name or password is incorrect!'
             ], 401);
         }
 
