@@ -1,37 +1,41 @@
-import React, {useRef} from 'react'
+import React, {useRef, useContext} from 'react'
 import axios from '../axios';
 import { Form, FormLabel, FormControl, FormGroup, Button } from 'react-bootstrap'
-
+import { useAuth } from '../contexts/AuthContext';
+import { AppContext } from '../AppContext';
+import Cookies from 'js-cookie';
 
 
 const LoginRegisterPage = (props) => {
-
+  const {setActiveView} = useContext(AppContext)
+  const {setUser} = useAuth();
+  const [error, setError] = React.useState(null);
   const userName = useRef(null);
   const password = useRef(null);
 
   const handleSubmit = async (event) => {
       event.preventDefault();
 
-      let token = () => {
-        return new Promise(function(resolve, reject) {
-          axios.get('/sanctum/csrf-cookie')
-          .then(response => {
-            resolve(response);
-          });
-        });
-      };
-      
-      console.log(token.data);
-      await axios.post('/api/login', {
+      const body = {
         name: userName.current.value,
-        password: password.current.value
-      }).then(response =>{
-        return response.data.message;
-      }).catch(err =>{
-        console.log(err);
-      });
+        password: password.current.value,       
+      };
 
+      
 
+      
+
+      try {
+        const resp = await axios.post('/api/login', body);
+        if (resp.status === 200) {
+          setUser(resp.data.user);
+          setActiveView('page-1');
+        }
+      } catch (error) {
+        if (error.response.status === 401) {
+          setError(error.response.data.message);
+        }
+      }
 
   }
 

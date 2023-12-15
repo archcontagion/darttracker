@@ -24,7 +24,11 @@ export const AuthProvider = ({ children }) => {
 
 	// csrf token generation for guest methods
 	const csrfToken = async () => {
-		await axios.get('http://localhost:8000/sanctum/csrf-cookie');
+		await axios.get('/sanctum/csrf-cookie').then( response => {
+			console.log( response.data);
+		  } ).catch( ( error ) => {
+			console.log( error );
+		  } );
 		return true;
 	};
 
