@@ -9,7 +9,8 @@ const axiosInstance = Axios.create({
 	withCredentials: true,
 	headers: {
 		"Content-Type": "application/json",
-		"Accept": "application/json"
+		"Accept": "application/json",
+        "X-CSRF-TOKEN" : Cookies.get('XSRF-TOKEN')
 	},
 });
 
@@ -18,12 +19,7 @@ const onRequest = (config) => {
     // If http method is `post | put | delete` and XSRF-TOKEN cookie is 
     // not present, call '/sanctum/csrf-cookie' to set CSRF token, then 
     // proceed with the initial response
-    if ((
-            config.method === 'post' || 
-            config.method === 'put' ||
-            config.method === 'delete'
-        ) &&
-        !Cookies.get('XSRF-TOKEN')) {
+    if (config.method !== 'get' && !Cookies.get('XSRF-TOKEN')) {
         return setCSRFToken()
             .then(response => config);
     }

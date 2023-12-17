@@ -6,6 +6,8 @@
    background-color:var(--dark-grey,#222222);
    background-blend-mode: color-burn;
    mix-blend-mode: normal;
+   position: absolute;
+   inset: 0;
 }
 
 #page-0 {
