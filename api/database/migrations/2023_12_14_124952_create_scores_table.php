@@ -11,15 +11,19 @@ return new class extends Migration
     {
         Schema::create('scores', function (Blueprint $table) {
             $table->bigIncrements('ScoreID');
-            $table->unsignedBigInteger('SessionPlayerID');
+            $table->unsignedBigInteger('PlayerID');
+            $table->unsignedBigInteger('SessionID');
             $table->integer('RoundNumber');
             $table->integer('SetNumber');
             $table->integer('LegNumber');
             $table->integer('ThrowNumber');
             $table->integer('ThrowScore');
             
-            // Define foreign key for SessionPlayerID
-            $table->foreign('SessionPlayerID')->references('SessionPlayerID')->on('session_players');
+            // Define foreign key for PlayerID
+            $table->foreign('PlayerID')->references('PlayerID')->on('players');
+      
+            // Define foreign key for SessionID
+            $table->foreign('SessionID')->references('SessionID')->on('sessions');
 
             $table->timestamps();
         });

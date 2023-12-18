@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('sessions', function (Blueprint $table) {
             $table->bigIncrements('SessionID');
-            $table->string('GameName');
             $table->dateTime('StartTime');
             $table->dateTime('EndTime')->nullable();
             $table->timestamps();
