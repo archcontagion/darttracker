@@ -15,13 +15,13 @@ class Score extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'RoundNumber',
-        'SetNumber',
-        'LegNumber', 
-        'ThrowNumber',
-        'ThrowScore',
-        'SessionID',
-        'PlayerID',       
+        'round_number',
+        'set_number',
+        'leg_number', 
+        'throw_number',
+        'throw_score',
+        'session_id',
+        'player_id',       
     ];
 
 }

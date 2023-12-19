@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 import Button from 'react-bootstrap/Button';
-import { AppContext } from '../AppContext';
+import { AppContext } from '../contexts/AppContext';
 
 const InsertScorePanel = () => {
 
@@ -37,7 +37,10 @@ const InsertScorePanel = () => {
     const {setActiveView,
         //    setOpenModal, 
         //    setModalMessage,
-           setPlayerScore,
+           setActivePlayerScore,
+           activePlayerScore,
+           setInactivePlayerScore,
+           inactivePlayerScore,
            activePlayer,
            inactivePlayer,
            setActivePlayer,
@@ -51,8 +54,9 @@ const InsertScorePanel = () => {
     setThrowCount(3);
     setCurrentThrowScores([]);
     setInactivePlayer(activePlayer);
+    setInactivePlayerScore(activePlayerScore);
     setActivePlayer(inactivePlayer);
-    setPlayerScore(inactivePlayer.score);    
+    setActivePlayerScore(inactivePlayerScore); 
   }
 
 
@@ -86,18 +90,18 @@ const InsertScorePanel = () => {
 
   let newScore = value;
 
-        if(checkIfEndedOnDouble(activePlayer.score, newScore,type) === false)
+        if(checkIfEndedOnDouble(activePlayerScore, newScore,type) === false)
         {
             callModal("Nicht mit Double beendet.");
         }   
 
-        if (checkIfOvershot(activePlayer.score, newScore) === false)
+        if (checkIfOvershot(activePlayerScore, newScore) === false)
         {
             callModal("Über das Ziel hinausgeschossen.");
 
         }
-
-        setPlayerScore(activePlayer.score -= value);
+        let updatedScore = activePlayerScore;
+        setActivePlayerScore(updatedScore -= value);
         // batch into array with function to push new dart score to the array
         // to display the single score points of every dart in a leg
         

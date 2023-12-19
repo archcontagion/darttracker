@@ -21,13 +21,13 @@ class ScoreController extends Controller
     public function store(Request $request)
     {
         $score = Score::create([
-            'RoundNumber' => $request->input('rounds'),
-            'SetNumber' => $request->input('sets'),
-            'LegNumber' => $request->input('legs'), 
-            'ThrowNumber' => $request->input('throws'),
-            'ThrowScore' => $request->input('throwscore'),
-            'SessionID' => $request->input('sessionid'),
-            'PlayerID' => $request->input('playerid'),   
+            'round_number' => $request->input('rounds'),
+            'set_number' => $request->input('sets'),
+            'leg_number' => $request->input('legs'), 
+            'throw_nomber' => $request->input('throws'),
+            'throw_score' => $request->input('throwscore'),
+            'session_id' => $request->input('sessionid'),
+            'player_id' => $request->input('playerid'),   
         ]);
 
         return response()->json($score, 201);
@@ -38,7 +38,7 @@ class ScoreController extends Controller
      */
     public function show(string $id)
     {
-        return Score::find($id);
+        return Score::where('score_id', $id)->first();
     }
 
     /**
@@ -48,9 +48,9 @@ class ScoreController extends Controller
     {
         $requestdata = $request->all(); 
 
-        $requestdata['date_created'] = date('Y-m-d');
+        $requestdata['updated_at'] = date('Y-m-d');
 
-         $score= Score::where('id',$id)->update($requestdata);
+         $score= Score::where('score_id',$id)->update($requestdata);
 
         if ($score) {
 

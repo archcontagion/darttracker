@@ -1,13 +1,12 @@
 import './App.scss';
-import React, { useState } from 'react'
-import {v1 as uuid} from "uuid"; 
-import { AppContext } from './AppContext';
+import React, { useState, useEffect } from 'react'
+import { AppContext } from './contexts/AppContext';
 import GameSession from './components/GameSession';
 import GameForm from './components/GameForm';
 import StartPage from './components/StartPage';
 import GameTypePage from './components/GameTypePage';
 import LoginRegisterPage from './components/LoginRegisterPage';
-
+import axios from './axios';
 
 
 
@@ -18,42 +17,33 @@ const App = () => {
   const [modalMessage,setModalMessage] = useState('');
   const [activeView,setActiveView] = useState('page-0');
   const [gameType,setGameType] = useState(501);
+  const [gameSession,setGameSession] = useState();  
   const [sets, setSets] = useState(1);
   const [legs, setLegs] = useState (3);
-  const [playerScore, setPlayerScore] = useState(501);
-
-  
-
-  // Mock data
-  let playerRooster = [
-    {id:uuid() ,name: 'Phillip',title: 'D-Master', score: gameType, avatar: "Player_1.png"},
-    {id:uuid() ,name: 'Mike',title: 'Sharpshooter', score: gameType, avatar: "Player_2.png"},
-    {id:uuid() ,name: 'Sahra',title: 'Sniper', score: gameType, avatar: "Player_3.png"},
-    {id:uuid() ,name: 'Jay',title: 'Bullseye', score: gameType, avatar: "Player_4.png"},
-    {id:uuid() ,name: 'Bob',title: 'Quickdraw', score: gameType, avatar: "Player_5.png"},
-    {id:uuid() ,name: 'Karsten',title: 'Sharpshooter', score: gameType, avatar: "Player_6.png"},
-    {id:uuid() ,name: 'Bianka',title: 'Sharpshooter', score: gameType, avatar: "Player_7.png"},
-    {id:uuid() ,name: 'Denise',title: 'Sharpshooter', score: gameType, avatar: "Player_8.png"},
-    {id:uuid() ,name: 'Florian',title: 'Sharpshooter', score: gameType, avatar: "Player_9.png"},
-    {id:uuid() ,name: 'Stefan',title: 'Sharpshooter', score: gameType, avatar: "Player_10.png"}
-  ];
-
-
-  // currently hard coded for development
-  // const [players, setPlayers] = useState([{id:uuid() ,name: 'Phillip',title: 'D-Master', score: gameType, avatar: "Player_1.png"},
-  // {id:uuid() ,name: 'Mike',title: 'Sharpshooter', score: gameType, avatar: "Player_2.png"}]);
-  // const [activePlayer,setActivePlayer] = useState(players[0].id);
-
-  // set players in vs screen to default values
-  const [player1, setPlayer1] = useState({'id':'noPlayer_01','name':'','avatar':'noAvatar.png'});
-  const [player2, setPlayer2] = useState({'id':'noPlayer_02','name':'','avatar':'noAvatar.png'});
-  const [players, setPlayers] = useState([]);
-  const [activePlayer,setActivePlayer] = useState();
-  const [inactivePlayer,setInactivePlayer] = useState(); 
+  const [playerRooster,setPlayerRooster] = useState();
+  const [player1, setPlayer1] = useState({player_id:'noPlayer_01'});
+  const [player2, setPlayer2] = useState({player_id:'noPlayer_02'});
+  const [sessionPlayers, setSessionPlayers] = useState([]);
+  const [activePlayer,setActivePlayer] = useState([]);
+  const [inactivePlayerScore,setInactivePlayerScore] = useState();
+  const [activePlayerScore,setActivePlayerScore] = useState();
+  const [inactivePlayer,setInactivePlayer] = useState([]);
   const [throwCount, setThrowCount] = useState(3);
   const [currentThrowScores, setCurrentThrowScores] = useState([]);
 
+  
+  async function getPlayerRooster() {
+		axios.get('/api/players').then( response => {
+			setPlayerRooster(response.data);
+		  } ).catch( ( error ) => {
+			console.log( error );
+		  } );
+		return true;
+	}
 
+  useEffect(() => {
+    getPlayerRooster();
+  }, [])
 
   
   // all the hooks that will be given to the central AppContext, 
@@ -63,26 +53,38 @@ const App = () => {
     'setOpenModal': setOpenModal,
     'modalMessage': modalMessage,
     'setModalMessage': setModalMessage,
+
+    'setGameSession' : setGameSession,
+    'gameSession': gameSession,
+
     'player1': player1,
     'player2': player2,
     'setPlayer1': setPlayer1,
     'setPlayer2': setPlayer2,
+
     'setGameType': setGameType,
+
     'setLegs': setLegs,
     'setSets': setSets,
     'setActiveView': setActiveView,
     'gameType': gameType,
     'legs': legs,
     'sets': sets,
-    'players': players,
-    'setPlayers': setPlayers,
-    'setPlayerScore': setPlayerScore,
-    'playerScore': playerScore,
-    'activePlayer': activePlayer,
-    'setActivePlayer': setActivePlayer,
+
+    'sessionPlayers': sessionPlayers,
+    'setSessionPlayers': setSessionPlayers,
+
     'inactivePlayer': inactivePlayer,
     'setInactivePlayer': setInactivePlayer,
+    'activePlayer': activePlayer,
+    'setActivePlayer': setActivePlayer,
+    'setActivePlayerScore': setActivePlayerScore,
+    'activePlayerScore':activePlayerScore,
+    'inactivePlayerScore':inactivePlayerScore,
+    'setInactivePlayerScore': setInactivePlayerScore,
+
     'playerRooster': playerRooster,
+    
     'throwCount': throwCount,
     'setThrowCount': setThrowCount,
     'currentThrowScores': currentThrowScores,

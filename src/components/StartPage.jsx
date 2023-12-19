@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import Button from 'react-bootstrap/Button';
-import { AppContext } from '../AppContext';
+import { AppContext } from '../contexts/AppContext';
 
 const StartPage = () => {
     const {setActiveView} = useContext(AppContext)

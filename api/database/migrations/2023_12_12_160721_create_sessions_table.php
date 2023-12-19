@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sessions', function (Blueprint $table) {
-            $table->bigIncrements('SessionID');
-            $table->dateTime('StartTime');
-            $table->dateTime('EndTime')->nullable();
+            $table->bigIncrements('session_id');
+            $table->dateTime('start_time');
+            $table->dateTime('end_time')->nullable();
             $table->timestamps();
         });
     }

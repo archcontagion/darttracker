@@ -10,20 +10,20 @@ return new class extends Migration
     public function up()
     {
         Schema::create('scores', function (Blueprint $table) {
-            $table->bigIncrements('ScoreID');
-            $table->unsignedBigInteger('PlayerID');
-            $table->unsignedBigInteger('SessionID');
-            $table->integer('RoundNumber');
-            $table->integer('SetNumber');
-            $table->integer('LegNumber');
-            $table->integer('ThrowNumber');
-            $table->integer('ThrowScore');
+            $table->bigIncrements('score_id');
+            $table->unsignedBigInteger('player_id');
+            $table->unsignedBigInteger('session_id');
+            $table->integer('round_number');
+            $table->integer('set_number')->default(1);
+            $table->integer('leg_number')->default(3);
+            $table->integer('throw_number')->default(1);
+            $table->integer('throw_score');
             
-            // Define foreign key for PlayerID
-            $table->foreign('PlayerID')->references('PlayerID')->on('players');
+            // Define foreign key for player_id
+            $table->foreign('player_id')->references('player_id')->on('players');
       
-            // Define foreign key for SessionID
-            $table->foreign('SessionID')->references('SessionID')->on('sessions');
+            // Define foreign key for session_id
+            $table->foreign('session_id')->references('session_id')->on('sessions');
 
             $table->timestamps();
         });

@@ -21,7 +21,9 @@ class PlayerController extends Controller
     public function store(Request $request)
     {
         $player = Player::create([
-                'PlayerName' => $request->input('name')
+                'player_name' => $request->input('playername'),
+                'player_title' => $request->input('playertitle'),
+                'player_image' => $request->input('playerimage')
         ]);
 
 
@@ -34,7 +36,7 @@ class PlayerController extends Controller
      */
     public function show(string $id)
     {
-        return Player::find($id);
+        return Player::where('player_id', $id)->first();
     }
 
     /**
@@ -44,9 +46,9 @@ class PlayerController extends Controller
     {
         $requestdata = $request->all(); 
 
-        $requestdata['date_created'] = date('Y-m-d');
+        $requestdata['updated_at'] = date('Y-m-d');
 
-         $player= Player::where('id',$id)->update($requestdata);
+         $player= Player::where('player_id',$id)->update($requestdata);
 
         if ($player) {
 

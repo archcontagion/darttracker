@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import Button from 'react-bootstrap/Button';
 import { Image } from 'react-bootstrap';
-import { AppContext } from '../AppContext';
-import { GameType } from './GameType';
+import { AppContext } from '../contexts/AppContext';
+import { GameTypeComponent } from './GameTypeComponent';
 
 const GameTypePage = () => {
     const {setActiveView} = useContext(AppContext)
@@ -15,7 +15,7 @@ const GameTypePage = () => {
             </Button>
             </div>
             <div className="row">
-                <GameType></GameType>
+                <GameTypeComponent></GameTypeComponent>
             </div>
         </div>
     )

@@ -23,7 +23,7 @@ class SessionController extends Controller
     {
         $currentTime = Carbon::now();
         $session = Session::create([
-            'StartTime' => $currentTime
+            'start_time' => $currentTime
         ]);
 
         return response()->json($session, 201);
@@ -34,7 +34,7 @@ class SessionController extends Controller
      */
     public function show(string $id)
     {
-        return Session::find($id);
+        return Session::where('session_id', $id)->first();
     }
 
     /**
@@ -44,9 +44,9 @@ class SessionController extends Controller
     {
         $requestdata = $request->all(); 
 
-        $requestdata['date_created'] = date('Y-m-d');
+        $requestdata['updated_at'] = date('Y-m-d');
 
-         $session= Session::where('id',$id)->update($requestdata);
+         $session= Session::where('session_id',$id)->update($requestdata);
 
         if ($session) {
 

@@ -1,28 +1,91 @@
-import React, { useContext } from 'react'
-import { AppContext } from '../AppContext';
+import React, { useContext, useEffect } from 'react'
+import { AppContext } from '../contexts/AppContext';
 import Button from 'react-bootstrap/Button';
 import { Image } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import PlayerVersusList from './PlayerVersusList';
-
+import axios from '../axios';
 
 import PlayerRooster from './PlayerRooster';
 
+
 const GameForm = () => {
-    const {setActiveView,
-           players} = useContext(AppContext);
+    const {activePlayer,
+           setActivePlayerScore,
+           inactivePlayer,
+           setInactivePlayerScore, 
+           sets,
+           legs, 
+           gameType,
+           setActiveView,
+           gameSession, 
+           setGameSession, 
+           sessionPlayers} = useContext(AppContext);
+
+    // startGameSession wird im useEffect ausgefuehrt und createScores wird erst mit dem Submit Handler ausgefuehrt
+    async function startGameSession() {
+      axios.post('/api/sessions').then( response => {
+        setGameSession(response.data);
+        } )
+        .catch( ( error ) => {
+        console.log( error );
+        } );
+        return true;
+    }
+
+    async function createScoresandSetView() {
+      // Score Objekte fuer beide Spieler erstellen für diese Gamesession 
+      // activePlayer score object
+      axios.post('/api/scores',
+        {'rounds': 0,
+        'sets':sets,
+        'legs':legs,
+        'throwscore':gameType,
+        'throws': 0,
+        'sessionid': gameSession.id,
+        'playerid': activePlayer.player_id
+      }).then( response => {
+        setActivePlayerScore(response.data);
+      } )
+      .catch( ( error ) => {
+      console.log( error );
+      } );
+      
+      // inactivePlayer score object
+      axios.post('/api/scores',
+        {'rounds': 0,
+        'sets':sets,
+        'legs':legs,
+        'throwscore':gameType,
+        'throws': 0,
+        'sessionid': gameSession.id,
+        'playerid': inactivePlayer.player_id
+      }).then( response => {
+        setInactivePlayerScore(response.data);
+      } )
+      .then(response => {
+        setActiveView('page-4')
+      })
+      .catch( ( error ) => {
+      console.log( error );
+      } );
+    }
+
+    // wird sofort ausgefuehrt damit die session id vorhanden ist wenn man die score objekte erstellt  
+    useEffect(() => {
+      startGameSession();      
+    }, [])
 
     const handleSubmit = (event)=> {
         event.preventDefault();
-        if (players.length < 2)
+        if (sessionPlayers.length < 2)
         {
             document.getElementsByClassName('infoStart')[0].style.display = "block"; 
         }
         else {
             document.getElementsByClassName('infoStart')[0].style.display = "none"; 
-            setActiveView('page-4');
-        }
-    
+            createScoresandSetView();
+          }
     }
 
     return (

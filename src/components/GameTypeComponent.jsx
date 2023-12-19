@@ -1,20 +1,18 @@
 import React, { useContext } from 'react'
 import Button from 'react-bootstrap/Button';
-import { AppContext } from '../AppContext';
+import { AppContext } from '../contexts/AppContext';
 
 
 
-export const GameType = () => {
+export const GameTypeComponent = () => {
   const {setActiveView,
-         setGameType,
-         setPlayerScore} = useContext(AppContext)
+         setGameType} = useContext(AppContext)
   
   return (
     <div className="game-type">
 
     <Button className="btn-101" value="101" onClick={(event) => {
-      setGameType(event.currentTarget.value);
-      setPlayerScore(event.currentTarget.value);
+      setGameType(event.currentTarget.value);      
       setActiveView('page-3');
       }}>
       <h2 className="top">
@@ -33,8 +31,7 @@ export const GameType = () => {
       <h3>Short and sweet</h3>
     </Button>  
     <Button className="btn-301" value="301" onClick={(event) => {
-      setGameType(event.currentTarget.value);
-      setPlayerScore(event.currentTarget.value);
+      setGameType(event.currentTarget.value);     
       setActiveView('page-3');
       }}>
       <h2 className="top">
@@ -53,8 +50,7 @@ export const GameType = () => {
       <h3>A real challange</h3>
     </Button>  
     <Button className="btn-501" value="501" onClick={(event) => {
-      setGameType(event.currentTarget.value);
-      setPlayerScore(event.currentTarget.value);
+      setGameType(event.currentTarget.value);     
       setActiveView('page-3');
       }}>
       <h2 className="top">
@@ -75,7 +71,6 @@ export const GameType = () => {
     <Button className="btn-atc" value="ATC" onClick={(event) => {
       alert("WIP: Not yet implemented.");
       // setGameType(event.targcurrentTargetet.value);
-      // setPlayerScore(event.currentTarget.value);
       // setActiveView('page-3');
       }}>
       <h2 className="top">

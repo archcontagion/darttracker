@@ -2,8 +2,8 @@ import React, {useRef, useContext} from 'react'
 import axios from '../axios';
 import { Form, FormLabel, FormControl, FormGroup, Button } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext';
-import { AppContext } from '../AppContext';
-import Cookies from 'js-cookie';
+import { AppContext } from '../contexts/AppContext';
+
 
 
 const LoginRegisterPage = (props) => {

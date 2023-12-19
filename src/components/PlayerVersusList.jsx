@@ -1,13 +1,13 @@
 import React, { useContext } from 'react'
 import Button from 'react-bootstrap/Button';
 import { Image } from 'react-bootstrap';
-import { AppContext } from '../AppContext';
+import { AppContext } from '../contexts/AppContext';
 
 const PlayerVersusList = () => {
 
     const {
-          players,
-          setPlayers,
+          sessionPlayers,
+          setSessionPlayers,
           setPlayer1,
           setPlayer2,
           player1,
@@ -27,13 +27,13 @@ const PlayerVersusList = () => {
         setPlayer2({'id':'noPlayer_02','name':'','avatar':'noAvatar.png'})
       }
 
-      let index = players.map(item => {
+      let index = sessionPlayers.map(item => {
         return item.id;
       }).indexOf(id);
-      players.splice(index, 1);
+      sessionPlayers.splice(index, 1);
       
 
-      setPlayers([...players]);
+      setSessionPlayers([...sessionPlayers]);
     }
 
 
@@ -41,35 +41,35 @@ const PlayerVersusList = () => {
 
         <div className="playerList">
           <div className="versusArea">
-            <div className="versusPlayer first" key={player1.id}>
-              {player1.id !== 'noPlayer_01' ? 
-                <Button className="removeIcon" onClick={()=>{removePlayer(player1.id);}}>
-                  <Image  src={`../../images/removePlayerIcon.svg`} alt={`Spieler entfernen`} />  
-                </Button>
-              : null}
-              <Image className="versusImage" src={`../../images/${player1.avatar}`} alt={`Spieler: ${player1.name}`} />
-              <div className="versusPlayerName">
-                  <h2>{player1.name}</h2>
+            {player1.player_id !== 'noPlayer_01' ? 
+              <div className="versusPlayer first" key={player1.player_id}>
+                  <Button className="removeIcon" onClick={()=>{removePlayer(player1.player_id);}}>
+                    <Image  src={`../../images/removePlayerIcon.svg`} alt={`Spieler entfernen`} />  
+                  </Button>
+                <Image className="versusImage" src={`../../images/${player1.player_image}`} alt={`Spieler: ${player1.player_name}`} />
+                <div className="versusPlayerName">
+                    <h2>{player1.player_name}</h2>
+                </div>
+                <div className="versusPlayerTitle">
+                    <h2>{player1.player_title}</h2>
+                </div>
               </div>
-              <div className="versusPlayerTitle">
-                  <h2>{player1.title}</h2>
-              </div>
-            </div>
+            : null}
             <h2 className="versusHeader">VS</h2>
-            <div className="versusPlayer second" key={player2.id}>
-               {player2.id !== 'noPlayer_02' ? 
-                <Button className="removeIcon"  onClick={()=>{removePlayer(player2.id);}}>
-                  <Image src={`../../images/removePlayerIcon.svg`} alt={`Spieler entfernen`} />  
-                </Button>
-              : null}
-              <Image className="versusImage" src={`../../images/${player2.avatar}`} alt={`Spieler: ${player2.name}`} />
-              <div className="versusPlayerName">
-                  <h2>{player2.name}</h2>
+            {player2.player_id !== 'noPlayer_02' ? 
+              <div className="versusPlayer second" key={player2.player_id}>
+                  <Button className="removeIcon"  onClick={()=>{removePlayer(player2.player_id);}}>
+                    <Image src={`../../images/removePlayerIcon.svg`} alt={`Spieler entfernen`} />  
+                  </Button>
+                <Image className="versusImage" src={`../../images/${player2.player_image}`} alt={`Spieler: ${player2.player_name}`} />
+                <div className="versusPlayerName">
+                    <h2>{player2.player_name}</h2>
+                </div>
+                <div className="versusPlayerTitle">
+                    <h2>{player2.player_title}</h2>
+                </div>
               </div>
-              <div className="versusPlayerTitle">
-                  <h2>{player2.title}</h2>
-              </div>
-          </div>
+            : null}
           </div>
           
         </div>
