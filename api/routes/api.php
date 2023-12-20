@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\SessionPlayerController;
 use App\Http\Controllers\ScoreController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,7 +42,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('sessions/{session}', [SessionController::class, 'show']);
     Route::put('sessions/{session}', [SessionController::class, 'update']);
     Route::delete('sessions/{session}', [SessionController::class, 'destroy']);
-
 
 });
 

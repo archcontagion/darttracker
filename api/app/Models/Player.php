@@ -17,15 +17,7 @@ class Player extends Model
     protected $fillable = [
         'player_name',
         'player_title',
-        'player_image'        
+        'player_image'
     ];
 
-    public function sessions()
-    {
-        return $this->belongsToMany(Session::class)->withPivot(['player_id', 'session_id','score']);;
-    }
-
-    public function session(){
-        return $this->belongsTo(Session::class)->withPivot(['player_id','session_id','score']);
-    }
 }

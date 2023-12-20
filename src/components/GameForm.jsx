@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { AppContext } from '../contexts/AppContext';
 import Button from 'react-bootstrap/Button';
 import { Image } from 'react-bootstrap';
@@ -9,41 +9,52 @@ import axios from '../axios';
 import PlayerRooster from './PlayerRooster';
 
 
+
 const GameForm = () => {
     const {activePlayer,
            setActivePlayerScore,
            inactivePlayer,
            setInactivePlayerScore, 
-           sets,
-           legs, 
            gameType,
            setActiveView,
            gameSession, 
            setGameSession, 
            sessionPlayers} = useContext(AppContext);
+    
 
-    // startGameSession wird im useEffect ausgefuehrt und createScores wird erst mit dem Submit Handler ausgefuehrt
-    async function startGameSession() {
+
+    // startGameSession wird ausgefuehrt und danach createScores damit session_id vorhanden ist
+    function startGameSession() {
+
+      if (gameSession === undefined) 
+      {
       axios.post('/api/sessions').then( response => {
-        setGameSession(response.data);
-        } )
+          let resData = response.data;
+          setGameSession(resData);
+          return response.data;
+        })
+        .then(data => {
+          createScoresandSetView(data.id)
+        })    
         .catch( ( error ) => {
-        console.log( error );
+          console.log( error );
         } );
         return true;
+      }    
     }
 
-    async function createScoresandSetView() {
+
+    function createScoresandSetView(gamesession_id) {
       // Score Objekte fuer beide Spieler erstellen für diese Gamesession 
       // activePlayer score object
       axios.post('/api/scores',
-        {'rounds': 0,
-        'sets':sets,
-        'legs':legs,
-        'throwscore':gameType,
-        'throws': 0,
-        'sessionid': gameSession.id,
-        'playerid': activePlayer.player_id
+        {'round_number': 0,
+        'set_number':0,
+        'leg_number':0,
+        'throw_score':gameType,
+        'throw_number': 0,
+        'session_id': gamesession_id,
+        'player_id': activePlayer.player_id
       }).then( response => {
         setActivePlayerScore(response.data);
       } )
@@ -53,13 +64,13 @@ const GameForm = () => {
       
       // inactivePlayer score object
       axios.post('/api/scores',
-        {'rounds': 0,
-        'sets':sets,
-        'legs':legs,
-        'throwscore':gameType,
-        'throws': 0,
-        'sessionid': gameSession.id,
-        'playerid': inactivePlayer.player_id
+        {'round_number': 0,
+        'set_number':0,
+        'leg_number':0,
+        'throw_score':gameType,
+        'throw_number': 0,
+        'session_id': gamesession_id,
+        'player_id': inactivePlayer.player_id
       }).then( response => {
         setInactivePlayerScore(response.data);
       } )
@@ -71,10 +82,6 @@ const GameForm = () => {
       } );
     }
 
-    // wird sofort ausgefuehrt damit die session id vorhanden ist wenn man die score objekte erstellt  
-    useEffect(() => {
-      startGameSession();      
-    }, [])
 
     const handleSubmit = (event)=> {
         event.preventDefault();
@@ -84,7 +91,8 @@ const GameForm = () => {
         }
         else {
             document.getElementsByClassName('infoStart')[0].style.display = "none"; 
-            createScoresandSetView();
+            startGameSession();      
+            
           }
     }
 

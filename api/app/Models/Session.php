@@ -15,18 +15,19 @@ class Session extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'winner',
         'start_time',
         'end_time',
     ];
 
     public function players()
     {
-        return $this->belongsToMany(Player::class)->withPivot(['player_id','session_id','score']);
+        return $this->belongsToMany(Player::class)->withPivot(['player_id','session_id','score_id']);
     }
 
     public function player()
     {
-        return $this->belongsTo(Player::class)->withPivot(['player_id','session_id','score']);
+        return $this->belongsTo(Player::class)->withPivot(['player_id','session_id','score_id']);
     }
 
 

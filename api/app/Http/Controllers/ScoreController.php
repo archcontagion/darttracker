@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Score;
+use Illuminate\Support\Carbon;
 
 class ScoreController extends Controller
 {
@@ -21,13 +22,13 @@ class ScoreController extends Controller
     public function store(Request $request)
     {
         $score = Score::create([
-            'round_number' => $request->input('rounds'),
-            'set_number' => $request->input('sets'),
-            'leg_number' => $request->input('legs'), 
-            'throw_nomber' => $request->input('throws'),
-            'throw_score' => $request->input('throwscore'),
-            'session_id' => $request->input('sessionid'),
-            'player_id' => $request->input('playerid'),   
+            'round_number' => $request->input('round_number'),
+            'set_number' => $request->input('set_number'),
+            'leg_number' => $request->input('leg_number'), 
+            'throw_nomber' => $request->input('throw_number'),
+            'throw_score' => $request->input('throw_score'),
+            'session_id' => $request->input('session_id'),
+            'player_id' => $request->input('player_id'),   
         ]);
 
         return response()->json($score, 201);
@@ -48,9 +49,10 @@ class ScoreController extends Controller
     {
         $requestdata = $request->all(); 
 
-        $requestdata['updated_at'] = date('Y-m-d');
+        $requestdata['updated_at'] = Carbon::now();
 
-         $score= Score::where('score_id',$id)->update($requestdata);
+        $score = Score::where('score_id',$id)->update($requestdata);
+
 
         if ($score) {
 

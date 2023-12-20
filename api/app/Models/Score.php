@@ -20,8 +20,9 @@ class Score extends Model
         'leg_number', 
         'throw_number',
         'throw_score',
+        'score_id',
         'session_id',
-        'player_id',       
+        'player_id',
     ];
 
 }

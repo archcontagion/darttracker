@@ -17,9 +17,7 @@ const App = () => {
   const [modalMessage,setModalMessage] = useState('');
   const [activeView,setActiveView] = useState('page-0');
   const [gameType,setGameType] = useState(501);
-  const [gameSession,setGameSession] = useState();  
-  const [sets, setSets] = useState(1);
-  const [legs, setLegs] = useState (3);
+  const [gameSession,setGameSession] = useState();
   const [playerRooster,setPlayerRooster] = useState();
   const [player1, setPlayer1] = useState({player_id:'noPlayer_01'});
   const [player2, setPlayer2] = useState({player_id:'noPlayer_02'});
@@ -64,12 +62,9 @@ const App = () => {
 
     'setGameType': setGameType,
 
-    'setLegs': setLegs,
-    'setSets': setSets,
+
     'setActiveView': setActiveView,
     'gameType': gameType,
-    'legs': legs,
-    'sets': sets,
 
     'sessionPlayers': sessionPlayers,
     'setSessionPlayers': setSessionPlayers,

@@ -1,6 +1,7 @@
 import React, {useContext} from 'react'
 import Button from 'react-bootstrap/Button';
 import { AppContext } from '../contexts/AppContext';
+import axios from '../axios';
 
 const InsertScorePanel = () => {
 
@@ -48,15 +49,29 @@ const InsertScorePanel = () => {
            setThrowCount,
            setCurrentThrowScores,
            throwCount} = useContext(AppContext);  
+
+  // save the current score of the finished round to the database  
+  const saveCurrentScoreofRound = () =>{
+    
+    let updateRound = activePlayerScore.round_number += 1;
+
+    axios.post(`/api/scores/`,{...activePlayerScore, 
+        round_number: updateRound})
+    .catch( ( error ) => {
+    console.log( error );
+    });
+  }       
                        
   // finish round set inactive player active
   const finishRound = () =>{
+    saveCurrentScoreofRound();
     setThrowCount(3);
     setCurrentThrowScores([]);
     setInactivePlayer(activePlayer);
     setInactivePlayerScore(activePlayerScore);
     setActivePlayer(inactivePlayer);
     setActivePlayerScore(inactivePlayerScore); 
+
   }
 
 
@@ -100,8 +115,13 @@ const InsertScorePanel = () => {
             callModal("Über das Ziel hinausgeschossen.");
 
         }
-        let updatedScore = activePlayerScore;
-        setActivePlayerScore(updatedScore -= value);
+
+        let updateScore = activePlayerScore.throw_score -= value;
+        let updateThrowNumber =  activePlayerScore.throw_number;
+
+        setActivePlayerScore({...activePlayerScore, 
+            throw_score: updateScore,
+            throw_number: updateThrowNumber});
         // batch into array with function to push new dart score to the array
         // to display the single score points of every dart in a leg
         
