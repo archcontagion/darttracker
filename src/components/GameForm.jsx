@@ -5,13 +5,17 @@ import { Image } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import PlayerVersusList from './PlayerVersusList';
 import axios from '../axios';
-
-import PlayerRooster from './PlayerRooster';
+import PlayerRoster from './PlayerRoster';
+import Modal from './Modal';
 
 
 
 const GameForm = () => {
-    const {activePlayer,
+    const {modalOpen,
+           setModalOpen,
+           modalMessage,
+           setModalMessage, 
+           activePlayer,
            setActivePlayerScore,
            inactivePlayer,
            setInactivePlayerScore, 
@@ -23,6 +27,7 @@ const GameForm = () => {
     
 
 
+           
     // startGameSession wird ausgefuehrt und danach createScores damit session_id vorhanden ist
     function startGameSession() {
 
@@ -87,12 +92,13 @@ const GameForm = () => {
         event.preventDefault();
         if (sessionPlayers.length < 2)
         {
-            document.getElementsByClassName('infoStart')[0].style.display = "block"; 
+          setModalMessage('Please enter at least two players, in order to start the game.');
+          setModalOpen(true);
         }
         else {
-            document.getElementsByClassName('infoStart')[0].style.display = "none"; 
-            startGameSession();      
-            
+            setModalMessage('');
+            setModalOpen(false);
+            startGameSession(); 
           }
     }
 
@@ -107,14 +113,14 @@ const GameForm = () => {
           <div className="row">
             <PlayerVersusList></PlayerVersusList>
             
-            <PlayerRooster></PlayerRooster>
+            <PlayerRoster></PlayerRoster>
 
             <Form onSubmit={handleSubmit}>
             <Button className="playButton" type="submit">
               <h2>Spiel starten</h2>
               <Image className="playButton" src={`../../images/playButton.png`} alt={`Spiel starten`} />
-            </Button>
-            <div className="infoStart" style={{display:'none', color:'white'}}>Please enter at least two players, in order to start the game.</div>
+            </Button>            
+            {modalOpen && <Modal setModalOpen={setModalOpen}>{modalMessage}</Modal>} 
             <br/>
             </Form>
           </div>

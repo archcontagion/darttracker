@@ -4,13 +4,13 @@ import Button from 'react-bootstrap/Button';
 import { Image } from 'react-bootstrap';
 
 
-const PlayerRooster = () => {
+const PlayerRoster = () => {
     const {
         setActivePlayer,
         setInactivePlayer,
         sessionPlayers,
         setSessionPlayers,
-        playerRooster,
+        playerRoster,
         setPlayer1,
         setPlayer2} = useContext(AppContext);
     
@@ -36,17 +36,17 @@ const PlayerRooster = () => {
         }    
     }
 
-    // split player rooster into 5 entries per row
+    // split player roster into 5 entries per row
     const chunk = (arr, size) => 
     Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>
         arr.slice(i * size, i * size + size)
     );
-    const playerRoosterRows = chunk(playerRooster, 5);
+    const playerRosterRows = chunk(playerRoster, 5);
 
     return (
-        <table className="playerRooster">
+        <table className="playerRoster">
             <tbody>
-            {playerRoosterRows.map((array, index)=>{
+            {playerRosterRows.map((array, index)=>{
                 return (
                 <tr key={index}>                  
                 {array.map((player, index) => {
@@ -54,7 +54,7 @@ const PlayerRooster = () => {
                 <td key={player.player_id}>
                     <Button onClick={()=>{addPlayer(player)}}>
 
-                        <Image className="roosterImage" src={`../../images/${player.player_image}`} alt={`Spieler: ${player.player_name}`} />
+                        <Image className="rosterImage" src={`../../images/${player.player_image}`} alt={`Spieler: ${player.player_name}`} />
                     </Button>
                 </td>
                 )
@@ -68,4 +68,4 @@ const PlayerRooster = () => {
     )
 }
 
-export default PlayerRooster
+export default PlayerRoster

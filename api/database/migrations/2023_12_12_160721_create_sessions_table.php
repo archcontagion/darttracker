@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('sessions', function (Blueprint $table) {
             $table->bigIncrements('session_id');
-            $table->string('winner')->nullable();
+            $table->json('winners')->nullable();
             $table->dateTime('start_time');
             $table->dateTime('end_time')->nullable();
             $table->timestamps();

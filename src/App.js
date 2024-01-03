@@ -13,12 +13,12 @@ import axios from './axios';
 
 const App = () => {  
   
-  const [openModal,setOpenModal] = useState(false);
+  const [modalOpen,setModalOpen] = useState(false);
   const [modalMessage,setModalMessage] = useState('');
   const [activeView,setActiveView] = useState('page-0');
   const [gameType,setGameType] = useState(501);
   const [gameSession,setGameSession] = useState();
-  const [playerRooster,setPlayerRooster] = useState();
+  const [playerRoster,setPlayerRoster] = useState();
   const [player1, setPlayer1] = useState({player_id:'noPlayer_01'});
   const [player2, setPlayer2] = useState({player_id:'noPlayer_02'});
   const [sessionPlayers, setSessionPlayers] = useState([]);
@@ -30,9 +30,9 @@ const App = () => {
   const [currentThrowScores, setCurrentThrowScores] = useState([]);
 
   
-  async function getPlayerRooster() {
+  async function getPlayerRoster() {
 		axios.get('/api/players').then( response => {
-			setPlayerRooster(response.data);
+			setPlayerRoster(response.data);
 		  } ).catch( ( error ) => {
 			console.log( error );
 		  } );
@@ -40,15 +40,16 @@ const App = () => {
 	}
 
   useEffect(() => {
-    getPlayerRooster();
+    getPlayerRoster();
   }, [])
 
-  
+
   // all the hooks that will be given to the central AppContext, 
   // so that child components have the ability to change values outside of their scope.
   const state = {
-    'openModal': openModal,
-    'setOpenModal': setOpenModal,
+
+    'modalOpen': modalOpen,
+    'setModalOpen': setModalOpen,
     'modalMessage': modalMessage,
     'setModalMessage': setModalMessage,
 
@@ -78,7 +79,7 @@ const App = () => {
     'inactivePlayerScore':inactivePlayerScore,
     'setInactivePlayerScore': setInactivePlayerScore,
 
-    'playerRooster': playerRooster,
+    'playerRoster': playerRoster,
     
     'throwCount': throwCount,
     'setThrowCount': setThrowCount,

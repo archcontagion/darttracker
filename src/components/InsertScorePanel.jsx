@@ -2,6 +2,7 @@ import React, {useContext} from 'react'
 import Button from 'react-bootstrap/Button';
 import { AppContext } from '../contexts/AppContext';
 import axios from '../axios';
+import Modal from './Modal';
 
 const InsertScorePanel = () => {
 
@@ -35,9 +36,11 @@ const InsertScorePanel = () => {
                               {id:'m_23', value:20, label:20} 
                              ];
 
-    const {setActiveView,
-        //    setOpenModal, 
-        //    setModalMessage,
+    const {setActiveView,           
+           modalOpen,
+           setModalOpen,
+           modalMessage,
+           setModalMessage, 
            setActivePlayerScore,
            activePlayerScore,
            setInactivePlayerScore,
@@ -47,6 +50,7 @@ const InsertScorePanel = () => {
            setActivePlayer,
            setInactivePlayer,
            setThrowCount,
+           currentThrowScores,
            setCurrentThrowScores,
            throwCount} = useContext(AppContext);  
 
@@ -64,6 +68,18 @@ const InsertScorePanel = () => {
                        
   // finish round set inactive player active
   const finishRound = () =>{
+
+    // check if all darts were used
+    if (currentThrowScores.length < 3)
+    {
+        callModal("Bitte alle Pfeile verwenden bevor man die Runde beendet.");
+        return false;
+    }
+    else
+    {
+        setModalMessage('');        
+    }
+
     saveCurrentScoreofRound();
     setThrowCount(3);
     setCurrentThrowScores([]);
@@ -96,9 +112,8 @@ const InsertScorePanel = () => {
   }
 
   const callModal = (message) => {
-    // setModalMessage(message);
-    // setOpenModal(true);
-    alert(message);
+    setModalMessage(message);
+    setModalOpen(true);
   }
   // with each dart thrown subtract from active player score
   const subTractScore = (value,type) => {
@@ -218,6 +233,7 @@ const InsertScorePanel = () => {
         <Button onClick={()=>{finishRound()}} className="endGame" id="endGame">                
             <span>Runde beenden</span>
         </Button>
+        {modalOpen && <Modal setModalOpen={setModalOpen}>{modalMessage}</Modal>} 
     </div>
   )
 }

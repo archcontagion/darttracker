@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import { Image } from 'react-bootstrap';
 import { AppContext } from '../contexts/AppContext';
 
+
 const PlayerVersusList = () => {
 
     const {
@@ -17,14 +18,14 @@ const PlayerVersusList = () => {
     const removePlayer = (id) => {
 
       // unset player1 or player2 if it is their id that is being removed
-      if (player1.id === id)
+      if (player1.player_id === id)
       {
-        setPlayer1({'id':'noPlayer_01','name':'','avatar':'noAvatar.png'})
+        setPlayer1({'player_id':'noPlayer_01','name':'','avatar':'noAvatar.png'})
       }
 
-      if (player2.id === id)
+      if (player2.player_id === id)
       {
-        setPlayer2({'id':'noPlayer_02','name':'','avatar':'noAvatar.png'})
+        setPlayer2({'player_id':'noPlayer_02','name':'','avatar':'noAvatar.png'})
       }
 
       let index = sessionPlayers.map(item => {
