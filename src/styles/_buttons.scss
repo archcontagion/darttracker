@@ -23,6 +23,7 @@ button {
     }
     
 }
+
 .topButtons {
     margin-left: -1px;
 
@@ -43,6 +44,7 @@ button {
         background: var(--neutral-colors-black-75, #434343);
     }
 }
+
 .mainButtons {
 
     button {
@@ -75,6 +77,50 @@ button {
         align-items: center;
     }
 }
+
+.controlButtons {
+    display: flex;
+    align-items: stretch;
+
+    .revertThrow {
+        height:8.125rem;
+        width: 17rem;
+        padding: 0;
+        background-repeat: no-repeat;
+        background-image:url(../../public/images/revertThrow.svg);
+        background-position: 0;
+      }
+    
+      .endGame {
+        padding: 0.625rem;
+        height:8.125rem;
+        color: var(--neutral-colors-white, #FFF);
+        font-family: Alumni Sans;
+        font-size: 2.75rem;
+        font-style: italic;
+        font-weight: 700;
+        line-height: 80%; 
+        text-transform: uppercase;
+        border: 1px solid var(--neutral-colors-black-75, #434343);
+        background-color: var(--neutral-colors-black-80, #363636);
+    
+        span {
+          margin-left: 5rem;
+        }
+    
+        @media only screen and (min-width: 680px){
+          height:8.125rem;
+          font-size: 3.75rem;
+    
+          span {
+            margin-left: 0;
+          }
+        
+        }
+    
+      }
+}
+
 
 .back-link {
     background:none;

@@ -3,13 +3,13 @@ import axios from '../axios';
 import { Form, FormLabel, FormControl, FormGroup, Button } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext';
 import { AppContext } from '../contexts/AppContext';
+import Modal from './Modal';
 
 
 
 const LoginRegisterPage = (props) => {
-  const {setActiveView} = useContext(AppContext)
+  const {setActiveView, modalMessage, modalOpen, setModalOpen, callModal} = useContext(AppContext)
   const {setUser} = useAuth();
-  const [error, setError] = React.useState(null);
   const userName = useRef(null);
   const password = useRef(null);
 
@@ -33,9 +33,10 @@ const LoginRegisterPage = (props) => {
         }
       } catch (error) {
         if (error.response.status === 401) {
-          setError(error.response.data.message);
+          callModal('Username or Password are incorrect!');         
         }
       }
+      
 
   }
 
@@ -53,6 +54,7 @@ const LoginRegisterPage = (props) => {
             </FormGroup>
             <Button type="submit">Einloggen</Button>
         </Form>
+        {modalOpen && <Modal setModalOpen={setModalOpen}>{modalMessage}</Modal>} 
     </div>
   )
 }

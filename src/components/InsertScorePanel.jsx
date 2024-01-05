@@ -39,8 +39,8 @@ const InsertScorePanel = () => {
     const {setActiveView,           
            modalOpen,
            setModalOpen,
+           callModal,
            modalMessage,
-           setModalMessage, 
            setActivePlayerScore,
            activePlayerScore,
            setInactivePlayerScore,
@@ -59,37 +59,64 @@ const InsertScorePanel = () => {
     
     let updateRound = activePlayerScore.round_number += 1;
 
-    axios.post(`/api/scores/`,{...activePlayerScore, 
-        round_number: updateRound})
+    axios.post(`/api/scores/`,
+    {...activePlayerScore, 
+     round_score: JSON.stringify(currentThrowScores),
+     round_number: updateRound
+    })
     .catch( ( error ) => {
     console.log( error );
     });
-  }       
+  }  
+
+  // option to revert dart throws in a round
+  const revertThrow = () => {
+    if (currentThrowScores.length > 0)
+    {
+        let lastThrow = currentThrowScores.slice(-1);
+        // add last throw score to the active player score
+        let revertScore = parseInt(activePlayerScore.throw_score,10);
+        revertScore += parseInt(lastThrow,10);        
+        setActivePlayerScore({...activePlayerScore, 
+            throw_score: revertScore
+        });
+        // delete last throw from currentThrowScores
+        currentThrowScores.pop();
+        setCurrentThrowScores(currentThrowScores);
+        // reset throw count
+        setThrowCount(throwCount + 1);
+    }
+    else
+    {
+        callModal("Keine Würfe vorhanden zum wiederholen!");
+    }
+  }
+  
+  // save start score of active player, to be able to reset score back in case of busted score
+  const activeStartScore = activePlayerScore.throw_score;
+
+  //check if score is greater 1, otherwise it is not possible to end on double
+  const checkIfScoreGreaterOne = (score) => {
+    
+    if (score > 1)
+    {
+        return true;
+    }
+    return false;
+  }
                        
-  // finish round set inactive player active
-  const finishRound = () =>{
+
+  // check if all darts used before the round is ended
+  const checkIfAllDartsUsed = (currentThrowScores) => {
 
     // check if all darts were used
     if (currentThrowScores.length < 3)
     {
-        callModal("Bitte alle Pfeile verwenden bevor man die Runde beendet.");
+       
         return false;
     }
-    else
-    {
-        setModalMessage('');        
-    }
-
-    saveCurrentScoreofRound();
-    setThrowCount(3);
-    setCurrentThrowScores([]);
-    setInactivePlayer(activePlayer);
-    setInactivePlayerScore(activePlayerScore);
-    setActivePlayer(inactivePlayer);
-    setActivePlayerScore(inactivePlayerScore); 
-
+    return true;
   }
-
 
   // check if score is bust
   // check if last throw was double if score is zero
@@ -110,42 +137,83 @@ const InsertScorePanel = () => {
     }
     return true;
   }
-
-  const callModal = (message) => {
-    setModalMessage(message);
-    setModalOpen(true);
+  
+  // end round and change players, finish round has futher condition if player actively ends round
+  const endRound = () =>{
+    saveCurrentScoreofRound();
+    setThrowCount(3);
+    setCurrentThrowScores([]);
+    setInactivePlayer(activePlayer);
+    setInactivePlayerScore(activePlayerScore);
+    setActivePlayer(inactivePlayer);
+    setActivePlayerScore(inactivePlayerScore); 
   }
+
+  const roundBustedOnOne = () => {
+    // reset score to initial value
+    setActivePlayerScore({...activePlayerScore, 
+        throw_score: activeStartScore,
+        is_busted: true
+    });
+    // TODO: Modal with button 'repeat throw' and 'end round'
+    callModal("Da Ergebnis 1. Nicht mit Double beendbar.");
+  }
+
+
   // with each dart thrown subtract from active player score
   const subTractScore = (value,type) => {
 
-  let newScore = value;
+    let newScore = value;
+    
+    if(checkIfEndedOnDouble(activePlayerScore.throw_score, newScore,type) === false)
+    {
+        callModal("Nicht mit Double beendet.");
+    }   
 
-        if(checkIfEndedOnDouble(activePlayerScore, newScore,type) === false)
+    if (checkIfOvershot(activePlayerScore.throw_score, newScore) === false)
+    {
+        callModal("Über das Ziel hinausgeschossen.");
+
+    }
+
+
+    let updateScore = activePlayerScore.throw_score -= value;
+    let updateThrowNumber =  activePlayerScore.throw_number;
+
+    setActivePlayerScore({...activePlayerScore, 
+        throw_score: updateScore,
+        throw_number: updateThrowNumber});
+    // batch into array with function to push new dart score to the array
+    // to display the single score points of every dart in a leg
+    
+    setCurrentThrowScores(currentThrowScores => [...currentThrowScores,newScore]);
+
+    
+    setThrowCount (throwCount-1);
+
+    if (checkIfScoreGreaterOne(activePlayerScore.throw_score) === false)
+    {
+        roundBustedOnOne();            
+    }
+       
+  }     
+  
+    // finish round set inactive player active
+    const finishRound = () =>{
+
+        if (checkIfScoreGreaterOne(activePlayerScore.throw_score) === false)
         {
-            callModal("Nicht mit Double beendet.");
-        }   
-
-        if (checkIfOvershot(activePlayerScore, newScore) === false)
-        {
-            callModal("Über das Ziel hinausgeschossen.");
-
+            roundBustedOnOne();
         }
 
-        let updateScore = activePlayerScore.throw_score -= value;
-        let updateThrowNumber =  activePlayerScore.throw_number;
-
-        setActivePlayerScore({...activePlayerScore, 
-            throw_score: updateScore,
-            throw_number: updateThrowNumber});
-        // batch into array with function to push new dart score to the array
-        // to display the single score points of every dart in a leg
-        
-        setCurrentThrowScores(currentThrowScores => [...currentThrowScores,newScore]);
-
-        
-        setThrowCount (throwCount-1);
-       
-  }                   
+        if (checkIfAllDartsUsed(currentThrowScores) === false)
+        {
+            callModal("Bitte alle Pfeile verwenden bevor man die Runde beendet.");
+            return false;
+        }
+    
+        endRound();
+      }
 
                         
   return (
@@ -227,12 +295,13 @@ const InsertScorePanel = () => {
         <h3 className="headingChangeView">
             <Button onClick={(event)=>{event.preventDefault();setActiveView('page-1');}}>Ansicht wechseln</Button> 
         </h3>
-
-    
-
-        <Button onClick={()=>{finishRound()}} className="endGame" id="endGame">                
-            <span>Runde beenden</span>
-        </Button>
+        <div className="controlButtons">
+            <Button onClick={()=>{revertThrow()}} className="revertThrow" id="revertThrow">
+            </Button>
+            <Button onClick={()=>{finishRound()}} className="endGame" id="endGame">                
+                <span>Runde beenden</span>
+            </Button>
+        </div>
         {modalOpen && <Modal setModalOpen={setModalOpen}>{modalMessage}</Modal>} 
     </div>
   )

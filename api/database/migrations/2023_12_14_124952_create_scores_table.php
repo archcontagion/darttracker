@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('leg_number')->default(3);
             $table->integer('throw_number')->default(1);
             $table->integer('throw_score');
+            $table->json('round_score')->nullable();
+            $table->boolean('is_busted')->default(false);
             
             // Define foreign key for player_id
             $table->foreign('player_id')->references('player_id')->on('players');

@@ -1,8 +1,7 @@
 import React from 'react'
-import Button from 'react-bootstrap/Button';
 
 
-const Modal = ({ setModalOpen , show, children }) => {
+const Modal = ({ setModalOpen , children }) => {
    
   
     return (
@@ -12,9 +11,9 @@ const Modal = ({ setModalOpen , show, children }) => {
             {children}
           </div>  
           <br/>
-          <Button type="button" onClick={() => setModalOpen(false)}>
-            Schliessen
-          </Button>
+          <button type="button" onClick={() => setModalOpen(false)}>
+            Ok
+          </button>
         </section>
       </div>
     );

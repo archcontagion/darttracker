@@ -30,8 +30,8 @@ const GameForm = () => {
            
     // startGameSession wird ausgefuehrt und danach createScores damit session_id vorhanden ist
     function startGameSession() {
-
-      if (gameSession === undefined) 
+      // if gamesession is an empty object
+      if (Object.keys(gameSession).length === 0) 
       {
       axios.post('/api/sessions').then( response => {
           let resData = response.data;
@@ -89,6 +89,7 @@ const GameForm = () => {
 
 
     const handleSubmit = (event)=> {
+       
         event.preventDefault();
         if (sessionPlayers.length < 2)
         {

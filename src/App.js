@@ -17,17 +17,22 @@ const App = () => {
   const [modalMessage,setModalMessage] = useState('');
   const [activeView,setActiveView] = useState('page-0');
   const [gameType,setGameType] = useState(501);
-  const [gameSession,setGameSession] = useState();
-  const [playerRoster,setPlayerRoster] = useState();
+  const [gameSession,setGameSession] = useState({});
+  const [playerRoster,setPlayerRoster] = useState([]);
   const [player1, setPlayer1] = useState({player_id:'noPlayer_01'});
   const [player2, setPlayer2] = useState({player_id:'noPlayer_02'});
   const [sessionPlayers, setSessionPlayers] = useState([]);
-  const [activePlayer,setActivePlayer] = useState([]);
-  const [inactivePlayerScore,setInactivePlayerScore] = useState();
-  const [activePlayerScore,setActivePlayerScore] = useState();
-  const [inactivePlayer,setInactivePlayer] = useState([]);
+  const [activePlayer,setActivePlayer] = useState({});
+  const [inactivePlayerScore,setInactivePlayerScore] = useState({});
+  const [activePlayerScore,setActivePlayerScore] = useState({});
+  const [inactivePlayer,setInactivePlayer] = useState({});
   const [throwCount, setThrowCount] = useState(3);
   const [currentThrowScores, setCurrentThrowScores] = useState([]);
+
+  const callModal = (message) => {
+    setModalMessage(message);
+    setModalOpen(true);
+  }
 
   
   async function getPlayerRoster() {
@@ -50,6 +55,7 @@ const App = () => {
 
     'modalOpen': modalOpen,
     'setModalOpen': setModalOpen,
+    'callModal': callModal,
     'modalMessage': modalMessage,
     'setModalMessage': setModalMessage,
 
