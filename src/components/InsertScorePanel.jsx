@@ -1,7 +1,6 @@
 import React, {useContext} from 'react'
 import Button from 'react-bootstrap/Button';
 import { AppContext } from '../contexts/AppContext';
-import axios from '../axios';
 import Modal from './Modal';
 
 const InsertScorePanel = () => {
@@ -40,125 +39,21 @@ const InsertScorePanel = () => {
            modalOpen,
            setModalOpen,
            callModal,
+           revertThrow,
            modalMessage,
+           modalMode,
            setActivePlayerScore,
            activePlayerScore,
-           setInactivePlayerScore,
-           inactivePlayerScore,
-           activePlayer,
-           inactivePlayer,
-           setActivePlayer,
-           setInactivePlayer,
+           finishRound,
            setThrowCount,
-           currentThrowScores,
            setCurrentThrowScores,
-           throwCount} = useContext(AppContext);  
+           throwCount,
+           checkIfScoreGreaterOne,
+           checkIfOvershot,
+           checkIfEndedOnDouble,
+           roundBustedOnOne} = useContext(AppContext);  
 
-  // save the current score of the finished round to the database  
-  const saveCurrentScoreofRound = () =>{
-    
-    let updateRound = activePlayerScore.round_number += 1;
-
-    axios.post(`/api/scores/`,
-    {...activePlayerScore, 
-     round_score: JSON.stringify(currentThrowScores),
-     round_number: updateRound
-    })
-    .catch( ( error ) => {
-    console.log( error );
-    });
-  }  
-
-  // option to revert dart throws in a round
-  const revertThrow = () => {
-    if (currentThrowScores.length > 0)
-    {
-        let lastThrow = currentThrowScores.slice(-1);
-        // add last throw score to the active player score
-        let revertScore = parseInt(activePlayerScore.throw_score,10);
-        revertScore += parseInt(lastThrow,10);        
-        setActivePlayerScore({...activePlayerScore, 
-            throw_score: revertScore
-        });
-        // delete last throw from currentThrowScores
-        currentThrowScores.pop();
-        setCurrentThrowScores(currentThrowScores);
-        // reset throw count
-        setThrowCount(throwCount + 1);
-    }
-    else
-    {
-        callModal("Keine Würfe vorhanden zum wiederholen!");
-    }
-  }
   
-  // save start score of active player, to be able to reset score back in case of busted score
-  const activeStartScore = activePlayerScore.throw_score;
-
-  //check if score is greater 1, otherwise it is not possible to end on double
-  const checkIfScoreGreaterOne = (score) => {
-    
-    if (score > 1)
-    {
-        return true;
-    }
-    return false;
-  }
-                       
-
-  // check if all darts used before the round is ended
-  const checkIfAllDartsUsed = (currentThrowScores) => {
-
-    // check if all darts were used
-    if (currentThrowScores.length < 3)
-    {
-       
-        return false;
-    }
-    return true;
-  }
-
-  // check if score is bust
-  // check if last throw was double if score is zero
-  const checkIfEndedOnDouble = (score,subtractScore,type)=>{   
-
-    if (score - subtractScore === 0 && type !== 'double')
-    {
-        return false;
-    }
-    return true;
-  }
-
-  const checkIfOvershot = (score,subTractScore) => {
-
-    if (score - subTractScore < 0)
-    {
-        return false;
-    }
-    return true;
-  }
-  
-  // end round and change players, finish round has futher condition if player actively ends round
-  const endRound = () =>{
-    saveCurrentScoreofRound();
-    setThrowCount(3);
-    setCurrentThrowScores([]);
-    setInactivePlayer(activePlayer);
-    setInactivePlayerScore(activePlayerScore);
-    setActivePlayer(inactivePlayer);
-    setActivePlayerScore(inactivePlayerScore); 
-  }
-
-  const roundBustedOnOne = () => {
-    // reset score to initial value
-    setActivePlayerScore({...activePlayerScore, 
-        throw_score: activeStartScore,
-        is_busted: true
-    });
-    // TODO: Modal with button 'repeat throw' and 'end round'
-    callModal("Da Ergebnis 1. Nicht mit Double beendbar.");
-  }
-
 
   // with each dart thrown subtract from active player score
   const subTractScore = (value,type) => {
@@ -178,17 +73,11 @@ const InsertScorePanel = () => {
 
 
     let updateScore = activePlayerScore.throw_score -= value;
-    let updateThrowNumber =  activePlayerScore.throw_number;
 
-    setActivePlayerScore({...activePlayerScore, 
-        throw_score: updateScore,
-        throw_number: updateThrowNumber});
-    // batch into array with function to push new dart score to the array
-    // to display the single score points of every dart in a leg
-    
+    setActivePlayerScore({...activePlayerScore, throw_score: updateScore});
+
     setCurrentThrowScores(currentThrowScores => [...currentThrowScores,newScore]);
 
-    
     setThrowCount (throwCount-1);
 
     if (checkIfScoreGreaterOne(activePlayerScore.throw_score) === false)
@@ -197,25 +86,7 @@ const InsertScorePanel = () => {
     }
        
   }     
-  
-    // finish round set inactive player active
-    const finishRound = () =>{
-
-        if (checkIfScoreGreaterOne(activePlayerScore.throw_score) === false)
-        {
-            roundBustedOnOne();
-        }
-
-        if (checkIfAllDartsUsed(currentThrowScores) === false)
-        {
-            callModal("Bitte alle Pfeile verwenden bevor man die Runde beendet.");
-            return false;
-        }
-    
-        endRound();
-      }
-
-                        
+                          
   return (
     <div className="playerControls">
         <table className="topTable">
@@ -302,7 +173,7 @@ const InsertScorePanel = () => {
                 <span>Runde beenden</span>
             </Button>
         </div>
-        {modalOpen && <Modal setModalOpen={setModalOpen}>{modalMessage}</Modal>} 
+        {modalOpen && <Modal modalMode={modalMode} setModalOpen={setModalOpen}>{modalMessage}</Modal>} 
     </div>
   )
 }

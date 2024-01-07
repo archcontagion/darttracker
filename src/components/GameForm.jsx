@@ -14,9 +14,13 @@ const GameForm = () => {
     const {modalOpen,
            setModalOpen,
            modalMessage,
-           setModalMessage, 
+           setModalMessage,
+           modalMode,
+           initialSetValue,
+           initialLegValue, 
            activePlayer,
            setActivePlayerScore,
+           setActiveStartScore,
            inactivePlayer,
            setInactivePlayerScore, 
            gameType,
@@ -25,7 +29,24 @@ const GameForm = () => {
            setGameSession, 
            sessionPlayers} = useContext(AppContext);
     
+      
+    // create winnerstats json object based on initalSetValue und initialLegValue
+    const createWinnersStatsObject = () => {
+      let setArray = [];
+      let legArray = [];
 
+      for (let index=0;index < initialLegValue;index++)
+      {
+        legArray.push({"winner": ""});        
+      }
+
+      for(let index=0;index < initialSetValue;index++)
+      {
+        setArray.push({"winner": "", "legs": legArray})
+      }
+
+      return setArray;
+    }  
 
            
     // startGameSession wird ausgefuehrt und danach createScores damit session_id vorhanden ist
@@ -33,19 +54,28 @@ const GameForm = () => {
       // if gamesession is an empty object
       if (Object.keys(gameSession).length === 0) 
       {
-      axios.post('/api/sessions').then( response => {
-          let resData = response.data;
-          setGameSession(resData);
-          return response.data;
-        })
-        .then(data => {
-          createScoresandSetView(data.id)
-        })    
-        .catch( ( error ) => {
-          console.log( error );
-        } );
-        return true;
-      }    
+        // send winners_stats object with post request
+        let bodyFormData = new FormData();
+
+        let winnersStatsObject = createWinnersStatsObject();
+        bodyFormData.append('winners_stats',JSON.stringify(winnersStatsObject));
+
+        //set Session active ()
+        bodyFormData.append('is_active',1);
+
+        axios.post('/api/sessions', bodyFormData).then( response => {
+            let resData = response.data;
+            setGameSession(resData);
+            return response.data;
+          })
+          .then(data => {
+            createScoresandSetView(data.id)
+          })    
+          .catch( ( error ) => {
+            console.log( error );
+          } );
+          return true;
+        }    
     }
 
 
@@ -62,6 +92,8 @@ const GameForm = () => {
         'player_id': activePlayer.player_id
       }).then( response => {
         setActivePlayerScore(response.data);
+        // save start score of active player, to be able to reset score back in case of busted score
+        setActiveStartScore(gameType); 
       } )
       .catch( ( error ) => {
       console.log( error );
@@ -121,7 +153,7 @@ const GameForm = () => {
               <h2>Spiel starten</h2>
               <Image className="playButton" src={`../../images/playButton.png`} alt={`Spiel starten`} />
             </Button>            
-            {modalOpen && <Modal setModalOpen={setModalOpen}>{modalMessage}</Modal>} 
+            {modalOpen && <Modal modalMode={modalMode} setModalOpen={setModalOpen}>{modalMessage}</Modal>} 
             <br/>
             </Form>
           </div>

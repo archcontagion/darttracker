@@ -23,6 +23,7 @@ class ScoreController extends Controller
     {
         $score = Score::create([
             'round_number' => $request->input('round_number'),
+            'round_score' => $request->input('round_score'),
             'set_number' => $request->input('set_number'),
             'leg_number' => $request->input('leg_number'), 
             'throw_nomber' => $request->input('throw_number'),

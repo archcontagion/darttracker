@@ -15,7 +15,10 @@ class Session extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'winner',
+        'winner_id',
+        'winners_stats',
+        'session_state',
+        'is_active',
         'start_time',
         'end_time',
     ];

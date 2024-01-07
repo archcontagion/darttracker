@@ -23,7 +23,10 @@ class SessionController extends Controller
     {
         $currentTime = Carbon::now();
         $session = Session::create([
-            'start_time' => $currentTime
+            'start_time' => $currentTime,
+            'winners_stats' => $request->input('winners_stats'),
+            'winner_id' => $request->input('winner_id'),
+            'is_active' => $request->input('is_active'),
         ]);
 
         return response()->json($session, 201);

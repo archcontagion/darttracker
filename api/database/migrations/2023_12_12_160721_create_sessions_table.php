@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('session_id');
             $table->bigInteger('winner_id')->nullable();
             $table->json('winners_stats')->nullable();
+            $table->boolean('is_active')->default(false);
             $table->dateTime('start_time');
             $table->dateTime('end_time')->nullable();
             $table->timestamps();

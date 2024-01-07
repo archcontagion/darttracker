@@ -8,7 +8,12 @@ import Modal from './Modal';
 
 
 const LoginRegisterPage = (props) => {
-  const {setActiveView, modalMessage, modalOpen, setModalOpen, callModal} = useContext(AppContext)
+  const {setActiveView,
+         modalMessage,
+         modalOpen,
+         modalMode,
+         setModalOpen,
+         callModal} = useContext(AppContext)
   const {setUser} = useAuth();
   const userName = useRef(null);
   const password = useRef(null);
@@ -33,7 +38,10 @@ const LoginRegisterPage = (props) => {
         }
       } catch (error) {
         if (error.response.status === 401) {
-          callModal('Username or Password are incorrect!');         
+          callModal('Username oder Passwort waren falsch!');         
+        }
+        if (error.response.status === 422) {
+          callModal('Bitte, Username und Passwort eingeben!');         
         }
       }
       
@@ -54,7 +62,7 @@ const LoginRegisterPage = (props) => {
             </FormGroup>
             <Button type="submit">Einloggen</Button>
         </Form>
-        {modalOpen && <Modal setModalOpen={setModalOpen}>{modalMessage}</Modal>} 
+        {modalOpen && <Modal modalMode={modalMode} setModalOpen={setModalOpen}>{modalMessage}</Modal>} 
     </div>
   )
 }

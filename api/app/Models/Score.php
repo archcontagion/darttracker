@@ -16,6 +16,7 @@ class Score extends Model
      */
     protected $fillable = [
         'round_number',
+        'round_score',
         'set_number',
         'leg_number', 
         'throw_number',
